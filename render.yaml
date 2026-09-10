@@ -20,13 +20,12 @@
   # ---------------------------------------------------------------------------
   # Frontend Web UI (React + Vite SPA)
   # ---------------------------------------------------------------------------
-  - type: web
-    name: nexora-frontend
-    env: static
-    plan: free
-    rootDir: frontend
-    buildCommand: npm install && npm run build
-    staticPublishPath: ./dist
+- type: web
+  name: nexora-frontend
+  env: static
+  rootDir: frontend
+  buildCommand: npm install && npm run build
+  staticPublishPath: ./dist
     routes:
       - type: rewrite
         source: /*
