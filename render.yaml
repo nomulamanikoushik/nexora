@@ -23,7 +23,6 @@
   - type: web
     name: nexora-frontend
     env: static
-    region: oregon
     plan: free
     rootDir: frontend
     buildCommand: npm install && npm run build
