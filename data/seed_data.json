@@ -1,0 +1,488 @@
+{
+  "sectors": [
+    {
+      "slug": "food-beverage",
+      "name": "Food & Beverage",
+      "description": "Restaurants, Cloud Kitchens, Cafes, Quick Service Restaurants (QSR), and Gourmet Food Trucks.",
+      "avg_startup_capex_inr": 1000000,
+      "default_gross_margin": 0.65,
+      "default_net_margin": 0.22,
+      "cagr": 0.115,
+      "market_size_inr": "4.2 Lakh Crore",
+      "capital_weights": {
+        "setup": 0.18,
+        "equipment": 0.25,
+        "inventory": 0.1,
+        "employees": 0.15,
+        "marketing": 0.1,
+        "technology": 0.05,
+        "working_capital": 0.12,
+        "contingency": 0.05
+      },
+      "compliance": [
+        {
+          "title": "FSSAI Food Safety License",
+          "authority": "FSSAI",
+          "timeline": "15-30 days",
+          "mandatory": true
+        },
+        {
+          "title": "GST Registration",
+          "authority": "Commercial Tax Dept",
+          "timeline": "7-10 days",
+          "mandatory": true
+        },
+        {
+          "title": "Shop & Establishment Act",
+          "authority": "State Labour Dept",
+          "timeline": "10-15 days",
+          "mandatory": true
+        },
+        {
+          "title": "Fire Safety NOC",
+          "authority": "State Fire Dept",
+          "timeline": "20-30 days",
+          "mandatory": false
+        },
+        {
+          "title": "GHMC / Municipal Trade License",
+          "authority": "Local Municipality",
+          "timeline": "15-20 days",
+          "mandatory": true
+        },
+        {
+          "title": "Signage License",
+          "authority": "Municipal Corp",
+          "timeline": "7-10 days",
+          "mandatory": false
+        }
+      ],
+      "locations": {
+        "Hyderabad": {
+          "hotspots": [
+            "Madhapur",
+            "Gachibowli",
+            "Jubilee Hills",
+            "Kondapur",
+            "Banjara Hills"
+          ],
+          "avg_rent_sqft_inr": 75,
+          "demographics": "IT professionals, students, young families with high disposable income and preference for delivery and dine-out."
+        },
+        "Bengaluru": {
+          "hotspots": [
+            "Koramangala",
+            "Indiranagar",
+            "HSR Layout",
+            "Whitefield"
+          ],
+          "avg_rent_sqft_inr": 90,
+          "demographics": "Tech workforce, early adopters of specialty cafes and artisanal dining."
+        },
+        "Mumbai": {
+          "hotspots": [
+            "Bandra",
+            "Andheri West",
+            "Lower Parel",
+            "Powai"
+          ],
+          "avg_rent_sqft_inr": 130,
+          "demographics": "Fast-paced urban consumers, premium food delivery and midnight QSR demand."
+        }
+      }
+    },
+    {
+      "slug": "software-saas",
+      "name": "Software & SaaS",
+      "description": "B2B/B2C Software-as-a-Service, AI micro-tools, workflow automation, and mobile applications.",
+      "avg_startup_capex_inr": 1500000,
+      "default_gross_margin": 0.82,
+      "default_net_margin": 0.35,
+      "cagr": 0.22,
+      "market_size_inr": "1.8 Lakh Crore",
+      "capital_weights": {
+        "setup": 0.05,
+        "equipment": 0.08,
+        "inventory": 0.0,
+        "employees": 0.4,
+        "marketing": 0.25,
+        "technology": 0.12,
+        "working_capital": 0.07,
+        "contingency": 0.03
+      },
+      "compliance": [
+        {
+          "title": "Company Incorporation (Private Limited)",
+          "authority": "MCA",
+          "timeline": "7-14 days",
+          "mandatory": true
+        },
+        {
+          "title": "GST Registration",
+          "authority": "GST Portal",
+          "timeline": "5-7 days",
+          "mandatory": true
+        },
+        {
+          "title": "Software IP & Trademark",
+          "authority": "IP India",
+          "timeline": "30-90 days",
+          "mandatory": false
+        },
+        {
+          "title": "Data Protection & Privacy Policy (DPDP Act)",
+          "authority": "MeitY",
+          "timeline": "10 days",
+          "mandatory": true
+        }
+      ],
+      "locations": {
+        "Bengaluru": {
+          "hotspots": [
+            "HSR Layout",
+            "Koramangala",
+            "Outer Ring Road"
+          ],
+          "avg_rent_sqft_inr": 65,
+          "demographics": "Dense developer ecosystem, VC access, high talent density."
+        },
+        "Hyderabad": {
+          "hotspots": [
+            "HITEC City",
+            "Financial District",
+            "Raidurg"
+          ],
+          "avg_rent_sqft_inr": 55,
+          "demographics": "Extensive enterprise tech infrastructure and lower operating costs."
+        }
+      }
+    },
+    {
+      "slug": "retail",
+      "name": "Retail & E-commerce",
+      "description": "Specialty boutique, sustainable fashion, direct-to-consumer (D2C) brands, and omnichannel storefronts.",
+      "avg_startup_capex_inr": 1200000,
+      "default_gross_margin": 0.5,
+      "default_net_margin": 0.18,
+      "cagr": 0.14,
+      "market_size_inr": "6.8 Lakh Crore",
+      "capital_weights": {
+        "setup": 0.15,
+        "equipment": 0.12,
+        "inventory": 0.35,
+        "employees": 0.12,
+        "marketing": 0.14,
+        "technology": 0.04,
+        "working_capital": 0.05,
+        "contingency": 0.03
+      },
+      "compliance": [
+        {
+          "title": "Trade License",
+          "authority": "Municipal Authority",
+          "timeline": "15 days",
+          "mandatory": true
+        },
+        {
+          "title": "GST Registration",
+          "authority": "GST Portal",
+          "timeline": "7 days",
+          "mandatory": true
+        },
+        {
+          "title": "Shop & Establishment Act",
+          "authority": "Labour Dept",
+          "timeline": "10 days",
+          "mandatory": true
+        }
+      ],
+      "locations": {
+        "Mumbai": {
+          "hotspots": [
+            "Colaba",
+            "Bandra Linking Road",
+            "Juhu"
+          ],
+          "avg_rent_sqft_inr": 150,
+          "demographics": "Fashion-conscious shoppers, high spending power."
+        },
+        "Hyderabad": {
+          "hotspots": [
+            "Banjara Hills Road 10",
+            "Inorbit Mall Area",
+            "Ameerpet"
+          ],
+          "avg_rent_sqft_inr": 85,
+          "demographics": "Expanding affluent middle class and festive shopping surges."
+        }
+      }
+    },
+    {
+      "slug": "healthcare",
+      "name": "Healthcare & Wellness",
+      "description": "Diagnostic clinics, physiotherapy centers, wellness studios, and tele-health services.",
+      "avg_startup_capex_inr": 2500000,
+      "default_gross_margin": 0.6,
+      "default_net_margin": 0.25,
+      "cagr": 0.16,
+      "market_size_inr": "3.5 Lakh Crore",
+      "capital_weights": {
+        "setup": 0.15,
+        "equipment": 0.38,
+        "inventory": 0.1,
+        "employees": 0.18,
+        "marketing": 0.06,
+        "technology": 0.05,
+        "working_capital": 0.05,
+        "contingency": 0.03
+      },
+      "compliance": [
+        {
+          "title": "Clinical Establishments Registration",
+          "authority": "State Health Dept",
+          "timeline": "30-45 days",
+          "mandatory": true
+        },
+        {
+          "title": "Bio-Medical Waste Authorization",
+          "authority": "Pollution Control Board",
+          "timeline": "20-30 days",
+          "mandatory": true
+        },
+        {
+          "title": "PCPNDT Registration (if ultrasound)",
+          "authority": "District Health Authority",
+          "timeline": "45 days",
+          "mandatory": false
+        },
+        {
+          "title": "Pharmacy / Drug License",
+          "authority": "Drug Control Dept",
+          "timeline": "30 days",
+          "mandatory": false
+        }
+      ],
+      "locations": {
+        "Hyderabad": {
+          "hotspots": [
+            "Kukatpally",
+            "Secunderabad",
+            "Dilsukhnagar"
+          ],
+          "avg_rent_sqft_inr": 60,
+          "demographics": "High residential population density, growing demand for preventive diagnostics."
+        }
+      }
+    },
+    {
+      "slug": "education",
+      "name": "Education & EdTech",
+      "description": "Skill academies, STEM centers for children, test-prep hubs, and hybrid coaching centers.",
+      "avg_startup_capex_inr": 800000,
+      "default_gross_margin": 0.7,
+      "default_net_margin": 0.28,
+      "cagr": 0.15,
+      "market_size_inr": "2.1 Lakh Crore",
+      "capital_weights": {
+        "setup": 0.2,
+        "equipment": 0.18,
+        "inventory": 0.05,
+        "employees": 0.25,
+        "marketing": 0.15,
+        "technology": 0.07,
+        "working_capital": 0.07,
+        "contingency": 0.03
+      },
+      "compliance": [
+        {
+          "title": "Society / Trust / Section 8 or Pvt Ltd",
+          "authority": "Registrar of Societies / MCA",
+          "timeline": "14-21 days",
+          "mandatory": true
+        },
+        {
+          "title": "Municipal NOC & Fire Safety",
+          "authority": "Local Fire Dept",
+          "timeline": "20 days",
+          "mandatory": true
+        },
+        {
+          "title": "GST Registration",
+          "authority": "GST Portal",
+          "timeline": "7 days",
+          "mandatory": true
+        }
+      ],
+      "locations": {
+        "Hyderabad": {
+          "hotspots": [
+            "SR Nagar",
+            "Madhapur",
+            "Himayatnagar"
+          ],
+          "avg_rent_sqft_inr": 50,
+          "demographics": "Massive student clusters seeking tech skilling and career advancement."
+        }
+      }
+    },
+    {
+      "slug": "logistics",
+      "name": "Logistics & Supply Chain",
+      "description": "Hyperlocal delivery networks, cold chain transit, micro-warehousing, and fleet aggregators.",
+      "avg_startup_capex_inr": 2000000,
+      "default_gross_margin": 0.45,
+      "default_net_margin": 0.16,
+      "cagr": 0.13,
+      "market_size_inr": "7.5 Lakh Crore",
+      "capital_weights": {
+        "setup": 0.1,
+        "equipment": 0.35,
+        "inventory": 0.05,
+        "employees": 0.2,
+        "marketing": 0.08,
+        "technology": 0.08,
+        "working_capital": 0.1,
+        "contingency": 0.04
+      },
+      "compliance": [
+        {
+          "title": "Commercial Vehicle Permits",
+          "authority": "RTO",
+          "timeline": "15-20 days",
+          "mandatory": true
+        },
+        {
+          "title": "GST & E-Way Bill Registration",
+          "authority": "GSTN",
+          "timeline": "7 days",
+          "mandatory": true
+        },
+        {
+          "title": "Warehouse Storage License",
+          "authority": "State Warehousing Corp",
+          "timeline": "30 days",
+          "mandatory": false
+        }
+      ],
+      "locations": {
+        "Hyderabad": {
+          "hotspots": [
+            "Shamshabad Airport Zone",
+            "Medchal",
+            "Patancheru"
+          ],
+          "avg_rent_sqft_inr": 30,
+          "demographics": "Key connectivity on NH44 and Outer Ring Road corridors."
+        }
+      }
+    },
+    {
+      "slug": "manufacturing",
+      "name": "Light Manufacturing & Packaging",
+      "description": "Eco-packaging, herbal cosmetics, specialty food processing, and custom 3D prototyping.",
+      "avg_startup_capex_inr": 3000000,
+      "default_gross_margin": 0.55,
+      "default_net_margin": 0.2,
+      "cagr": 0.12,
+      "market_size_inr": "11.0 Lakh Crore",
+      "capital_weights": {
+        "setup": 0.15,
+        "equipment": 0.42,
+        "inventory": 0.15,
+        "employees": 0.12,
+        "marketing": 0.05,
+        "technology": 0.03,
+        "working_capital": 0.05,
+        "contingency": 0.03
+      },
+      "compliance": [
+        {
+          "title": "Factory License & Inspector of Factories",
+          "authority": "State Labour Dept",
+          "timeline": "30-45 days",
+          "mandatory": true
+        },
+        {
+          "title": "Consent to Establish (CTE / CTO)",
+          "authority": "Pollution Control Board",
+          "timeline": "30-60 days",
+          "mandatory": true
+        },
+        {
+          "title": "MSME Udyam Registration",
+          "authority": "Ministry of MSME",
+          "timeline": "2-3 days",
+          "mandatory": true
+        },
+        {
+          "title": "Power Connection (HT/LT Industrial)",
+          "authority": "State DISCOM",
+          "timeline": "20-30 days",
+          "mandatory": true
+        }
+      ],
+      "locations": {
+        "Hyderabad": {
+          "hotspots": [
+            "Cherlapally IDA",
+            "Jeedimetla",
+            "Kattedan"
+          ],
+          "avg_rent_sqft_inr": 25,
+          "demographics": "Established industrial development areas with power/water infrastructure."
+        }
+      }
+    },
+    {
+      "slug": "renewable-energy",
+      "name": "Renewable Energy & CleanTech",
+      "description": "Rooftop solar installation, EV charging station hubs, energy auditing, and battery swapping.",
+      "avg_startup_capex_inr": 3500000,
+      "default_gross_margin": 0.48,
+      "default_net_margin": 0.24,
+      "cagr": 0.26,
+      "market_size_inr": "3.0 Lakh Crore",
+      "capital_weights": {
+        "setup": 0.1,
+        "equipment": 0.45,
+        "inventory": 0.12,
+        "employees": 0.14,
+        "marketing": 0.07,
+        "technology": 0.04,
+        "working_capital": 0.05,
+        "contingency": 0.03
+      },
+      "compliance": [
+        {
+          "title": "DISCOM Net Metering Approval",
+          "authority": "State DISCOM",
+          "timeline": "30-45 days",
+          "mandatory": true
+        },
+        {
+          "title": "Electrical Inspectorate Clearance (CEIG)",
+          "authority": "Chief Electrical Inspector",
+          "timeline": "20-30 days",
+          "mandatory": true
+        },
+        {
+          "title": "MNRE Channel Partner Certification",
+          "authority": "MNRE",
+          "timeline": "30-60 days",
+          "mandatory": false
+        }
+      ],
+      "locations": {
+        "Hyderabad": {
+          "hotspots": [
+            "Gachibowli",
+            "Kompally",
+            "Uppal"
+          ],
+          "avg_rent_sqft_inr": 40,
+          "demographics": "Rapidly suburbanizing villa communities and commercial complexes installing rooftop solar."
+        }
+      }
+    }
+  ]
+}

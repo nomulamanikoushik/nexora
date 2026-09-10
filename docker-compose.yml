@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.backend
+    container_name: nexora_backend
+    environment:
+      - PROJECT_NAME=NEXORA: Intelligent multiagent for business planning startup
+      - DATABASE_URL=postgresql://nexora_user:nexora_secret_password_2026@db:5432/nexora_db
+      - SECRET_KEY=production_secret_key_change_in_production_2026
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.frontend
+    container_name: nexora_frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  db:
+    image: postgres:16-alpine
+    container_name: nexora_postgres
+    environment:
+      POSTGRES_USER: nexora_user
+      POSTGRES_PASSWORD: nexora_secret_password_2026
+      POSTGRES_DB: nexora_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
