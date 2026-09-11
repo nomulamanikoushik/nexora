@@ -42,7 +42,7 @@ export default function App() {
   };
 
   const handlePlanCreated = (initData, formInput) => {
-    setPlanInit({ ...initData, business_name: formInput.business_name });
+    setPlanInit({ ...formInput, ...initData, business_name: formInput.business_name });
     setActivePage("workspace");
   };
 

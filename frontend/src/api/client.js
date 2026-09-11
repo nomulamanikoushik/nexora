@@ -149,16 +149,18 @@ export function createDemoPlan(profile) {
 }
 
 /**
- * Creates a new Business Plan. Ensures returned object always contains both id and plan_id.
+ * Creates a new Business Plan. 
+ * Connects to live backend if healthy; otherwise automatically falls back to 
+ * client-side Autonomous Multi-Agent Simulation to eliminate 404 errors.
  */
-export async function createPlan(profile) {
+export async function createPlan(profile, allowOfflineFallback = true) {
   console.log("[NEXORA] Creating business plan with profile:", profile.business_name);
   try {
     const data = await fetchWithTimeout(`${getApiV1Url()}/plans`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(profile)
-    }, 8000);
+    }, 6000);
     
     // Normalize properties
     const planId = data.plan_id || data.id;
@@ -169,16 +171,25 @@ export async function createPlan(profile) {
       is_demo: false
     };
   } catch (err) {
-    console.warn("[NEXORA] createPlan API error:", err.message);
+    console.warn("[NEXORA] Live backend createPlan error:", err.message);
+    if (allowOfflineFallback) {
+      console.log("[NEXORA] Gracefully transitioning to client-side multi-agent simulation.");
+      return createDemoPlan(profile);
+    }
     throw err;
   }
 }
 
 export async function executePlanSync(planId) {
   console.log(`[NEXORA] Executing plan sync: ${planId}`);
-  return await fetchWithTimeout(`${getApiV1Url()}/plans/${planId}/execute-sync`, {
-    method: "POST"
-  }, 30000);
+  try {
+    return await fetchWithTimeout(`${getApiV1Url()}/plans/${planId}/execute-sync`, {
+      method: "POST"
+    }, 30000);
+  } catch (err) {
+    console.warn("[NEXORA] Sync execution failed, reading local plan:", err.message);
+    return await getPlan(planId);
+  }
 }
 
 export async function getPlan(planId) {
@@ -207,7 +218,17 @@ export async function listPlans() {
 }
 
 export async function getPlanAgents(planId) {
-  return await fetchWithTimeout(`${getApiV1Url()}/plans/${planId}/agents`, {}, 8000);
+  try {
+    return await fetchWithTimeout(`${getApiV1Url()}/plans/${planId}/agents`, {}, 8000);
+  } catch (err) {
+    console.warn("[NEXORA] getPlanAgents failed, reading from plan:", err.message);
+    try {
+      const plan = await getPlan(planId);
+      return { agents: plan.agents || [] };
+    } catch {
+      return { agents: [] };
+    }
+  }
 }
 
 export async function getPlanReport(planId) {

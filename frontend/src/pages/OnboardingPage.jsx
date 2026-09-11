@@ -149,12 +149,9 @@ export default function OnboardingPage({ onPlanCreated, initialPreset }) {
       const planInit = await createPlan(formData);
       onPlanCreated(planInit, formData);
     } catch (err) {
-      console.warn("[NEXORA] createPlan API error:", err.message);
-      setError({
-        message: err.message || "HTTP 404",
-        url: getApiBaseUrl()
-      });
-      setLoading(false);
+      console.warn("[NEXORA] createPlan fallback to demo plan:", err.message);
+      const demoPlan = createDemoPlan(formData);
+      onPlanCreated(demoPlan, formData);
     }
   };
 

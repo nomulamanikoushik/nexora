@@ -1,6 +1,6 @@
 import os
 from typing import List
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 _BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 _DEFAULT_DB = os.path.join(_BASE_DIR, "nexora.db").replace("\\", "/")
@@ -35,8 +35,6 @@ class Settings(BaseSettings):
     
     CORS_ORIGINS: List[str] = _PARSED_CORS
 
-    class Config:
-        env_file = ".env"
-        extra = "ignore"
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
 settings = Settings()
