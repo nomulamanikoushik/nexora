@@ -1,18 +1,27 @@
-const API_HOST = (import.meta.env.VITE_API_URL || "").replace(/\/$/, "");
-const BASE_URL = `${API_HOST}/api/v1`;
+export function getBaseUrl() {
+  if (typeof window !== "undefined") {
+    const custom = localStorage.getItem("nexora_api_url");
+    if (custom) return `${custom.replace(/\/$/, "")}/api/v1`;
+    if (import.meta.env.VITE_API_URL) return `${import.meta.env.VITE_API_URL.replace(/\/$/, "")}/api/v1`;
+    if (window.location.hostname.includes("github.io")) {
+      return "https://69d71c9ff42e47.lhr.life/api/v1";
+    }
+  }
+  return "/api/v1";
+}
 
 export async function getHealth() {
-  const res = await fetch(`${BASE_URL}/health`);
+  const res = await fetch(`${getBaseUrl()}/health`);
   return res.json();
 }
 
 export async function getSectors() {
-  const res = await fetch(`${BASE_URL}/sectors`);
+  const res = await fetch(`${getBaseUrl()}/sectors`);
   return res.json();
 }
 
 export async function createGuestSession() {
-  const res = await fetch(`${BASE_URL}/auth/guest`, {
+  const res = await fetch(`${getBaseUrl()}/auth/guest`, {
     method: "POST",
     headers: { "Content-Type": "application/json" }
   });
@@ -25,7 +34,7 @@ export async function createGuestSession() {
 }
 
 export async function createPlan(profile) {
-  const res = await fetch(`${BASE_URL}/plans`, {
+  const res = await fetch(`${getBaseUrl()}/plans`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(profile)
@@ -38,7 +47,7 @@ export async function createPlan(profile) {
 }
 
 export async function executePlanSync(planId) {
-  const res = await fetch(`${BASE_URL}/plans/${planId}/execute-sync`, {
+  const res = await fetch(`${getBaseUrl()}/plans/${planId}/execute-sync`, {
     method: "POST"
   });
   if (!res.ok) throw new Error("Sync execution failed");
@@ -46,28 +55,28 @@ export async function executePlanSync(planId) {
 }
 
 export async function getPlan(planId) {
-  const res = await fetch(`${BASE_URL}/plans/${planId}`);
+  const res = await fetch(`${getBaseUrl()}/plans/${planId}`);
   if (!res.ok) throw new Error("Plan not found");
   return res.json();
 }
 
 export async function listPlans() {
-  const res = await fetch(`${BASE_URL}/plans`);
+  const res = await fetch(`${getBaseUrl()}/plans`);
   return res.json();
 }
 
 export async function getPlanAgents(planId) {
-  const res = await fetch(`${BASE_URL}/plans/${planId}/agents`);
+  const res = await fetch(`${getBaseUrl()}/plans/${planId}/agents`);
   return res.json();
 }
 
 export async function getPlanReport(planId) {
-  const res = await fetch(`${BASE_URL}/plans/${planId}/report`);
+  const res = await fetch(`${getBaseUrl()}/plans/${planId}/report`);
   return res.json();
 }
 
 export async function runWhatIfSimulation(payload) {
-  const res = await fetch(`${BASE_URL}/what-if`, {
+  const res = await fetch(`${getBaseUrl()}/what-if`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload)
@@ -80,7 +89,7 @@ export async function runWhatIfSimulation(payload) {
 }
 
 export function streamPlan(planId, onEvent, onError, onComplete) {
-  const eventSource = new EventSource(`${BASE_URL}/plans/${planId}/stream`);
+  const eventSource = new EventSource(`${getBaseUrl()}/plans/${planId}/stream`);
 
   eventSource.onmessage = (event) => {
     try {
@@ -107,7 +116,7 @@ export function streamPlan(planId, onEvent, onError, onComplete) {
 }
 
 export async function understandIdea(payload) {
-  const res = await fetch(`${BASE_URL}/business/understand`, {
+  const res = await fetch(`${getBaseUrl()}/business/understand`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload)
@@ -120,13 +129,13 @@ export async function understandIdea(payload) {
 }
 
 export async function getLocations() {
-  const res = await fetch(`${BASE_URL}/locations`);
+  const res = await fetch(`${getBaseUrl()}/locations`);
   if (!res.ok) throw new Error("Failed to fetch locations");
   return res.json();
 }
 
 export async function compareLocations(payload) {
-  const res = await fetch(`${BASE_URL}/location/compare`, {
+  const res = await fetch(`${getBaseUrl()}/location/compare`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload)
