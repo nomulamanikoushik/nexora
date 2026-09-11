@@ -60,6 +60,7 @@ def create_plan(profile_in: BusinessProfileCreate, db: Session = Depends(get_db)
     db.refresh(plan)
 
     return {
+        "id": plan_id,
         "plan_id": plan_id,
         "profile_id": profile_id,
         "status": "initialized",
@@ -106,7 +107,12 @@ def stream_plan_execution(plan_id: str, db: Session = Depends(get_db)):
 
     return StreamingResponse(
         orchestrator.stream_orchestration(profile_dict, db, plan_id),
-        media_type="text/event-stream"
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache, no-transform",
+            "Connection": "keep-alive",
+            "X-Accel-Buffering": "no"
+        }
     )
 
 @router.post("/{plan_id}/execute-sync")

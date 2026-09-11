@@ -24,6 +24,14 @@ def setup_test_database():
 client = TestClient(app)
 
 def test_health_check():
+    # Test /health
+    resp_root = client.get("/health")
+    assert resp_root.status_code == 200
+    data_root = resp_root.json()
+    assert data_root["status"] == "ok"
+    assert data_root["service"] == "NEXORA API"
+
+    # Test /api/v1/health
     resp = client.get("/api/v1/health")
     assert resp.status_code == 200
     data = resp.json()

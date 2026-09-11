@@ -20,7 +20,8 @@ export default function AgentCard({
   outputPayload, 
   revisionCount = 0, 
   criticIssues, 
-  executionTimeMs 
+  executionTimeMs,
+  onRetry
 }) {
   const [expanded, setExpanded] = useState(false);
 
@@ -92,6 +93,14 @@ export default function AgentCard({
             {currentStatus.icon}
             {currentStatus.label}
           </span>
+          {status === "failed" && onRetry && (
+            <button
+              onClick={onRetry}
+              className="text-[11px] px-2.5 py-1 rounded-full bg-rose-600/80 hover:bg-rose-500 text-white font-semibold transition shadow"
+            >
+              Retry Agent
+            </button>
+          )}
           {outputPayload && (
             <button 
               onClick={() => setExpanded(!expanded)}

@@ -145,9 +145,9 @@ export default function Navbar({ activePage, setActivePage, activePlan }) {
 
         {/* CTA Button */}
         <div className="flex items-center gap-3">
-          <div className="hidden lg:flex items-center gap-1.5 text-xs text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 rounded-full">
+          <div className="hidden lg:flex items-center gap-1.5 text-xs text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 rounded-full font-medium">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            13 Agents Ready
+            16 Agents Active
           </div>
           <button
             onClick={() => setActivePage("onboarding")}

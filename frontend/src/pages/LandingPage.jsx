@@ -125,7 +125,7 @@ export default function LandingPage({ setActivePage, onSelectPreset }) {
               <Cpu className="w-5 h-5 animate-spin" />
             </div>
             <span className="text-[10px] uppercase font-bold text-cyan-400 tracking-wider">
-              13 Agents Collaborate
+              16 Agents Collaborate
             </span>
           </div>
 
