@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { 
   Cpu, 
   RotateCw, 
@@ -310,13 +310,17 @@ export default function AgentWorkspacePage({ planInit, onPlanComplete, setActive
 
   // Initial trigger
   useEffect(() => {
-    startPipeline();
+    if (planInit?.is_demo) {
+      handleStartDemoMode();
+    } else {
+      startPipeline();
+    }
     return () => {
       if (streamUnsubscribeRef.current) {
         streamUnsubscribeRef.current();
       }
     };
-  }, [activePlanId]);
+  }, [activePlanId, planInit?.is_demo]);
 
   // Auto-scroll logs
   useEffect(() => {

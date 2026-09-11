@@ -1,4 +1,4 @@
-﻿/**
+/**
  * NEXORA Frontend API Client
  * 
  * Provides unified, production-ready communication with the FastAPI backend.
@@ -121,6 +121,34 @@ export async function createGuestSession() {
 }
 
 /**
+ * Creates a client-side demo plan descriptor for offline/demo mode simulation
+ */
+export function createDemoPlan(profile) {
+  const planId = "demo_plan_" + Math.random().toString(36).substring(2, 10);
+  const offlinePlan = generatePlanOffline(profile);
+  offlinePlan.id = planId;
+  offlinePlan.plan_id = planId;
+  localStorage.setItem(`nexora_plan_${planId}`, JSON.stringify(offlinePlan));
+  
+  const saved = JSON.parse(localStorage.getItem("nexora_saved_plans") || "[]");
+  // Prepend if not duplicate
+  if (!saved.some(p => p.id === planId)) {
+    saved.unshift(offlinePlan);
+    localStorage.setItem("nexora_saved_plans", JSON.stringify(saved.slice(0, 20)));
+  }
+
+  return {
+    id: planId,
+    plan_id: planId,
+    is_demo: true,
+    status: "initialized",
+    message: "Demo Mode Initialized (Simulated Multi-Agent Architecture)",
+    stream_url: null,
+    profile
+  };
+}
+
+/**
  * Creates a new Business Plan. Ensures returned object always contains both id and plan_id.
  */
 export async function createPlan(profile) {
@@ -137,7 +165,8 @@ export async function createPlan(profile) {
     return {
       ...data,
       id: planId,
-      plan_id: planId
+      plan_id: planId,
+      is_demo: false
     };
   } catch (err) {
     console.warn("[NEXORA] createPlan API error:", err.message);
@@ -390,7 +419,7 @@ export function streamDemoPlan(profile, onEvent, onComplete) {
       clearInterval(timer);
       if (onComplete) onComplete(plan);
     }
-  }, 220);
+  }, 320);
 
   return () => {
     isCanceled = true;

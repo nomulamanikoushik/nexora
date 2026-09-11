@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { 
   Sparkles, 
   ArrowRight, 
@@ -16,10 +16,16 @@ import {
   Truck, 
   CheckCircle2, 
   Lightbulb, 
-  Layers
+  Layers,
+  AlertTriangle,
+  Server,
+  RefreshCw,
+  Settings as SettingsIcon,
+  Check
 } from "lucide-react";
 import { PRESETS } from "../utils/presets";
-import { createPlan, understandIdea } from "../api/client";
+import { createPlan, createDemoPlan, understandIdea, checkBackendHealth } from "../api/client";
+import { getApiBaseUrl, setCustomApiBaseUrl, LOCAL_DEV_DEFAULT_BACKEND } from "../config/api";
 
 export default function OnboardingPage({ onPlanCreated, initialPreset }) {
   const [currentStep, setCurrentStep] = useState(1);
@@ -50,6 +56,25 @@ export default function OnboardingPage({ onPlanCreated, initialPreset }) {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [backendProbe, setBackendProbe] = useState(null);
+  const [showUrlEditor, setShowUrlEditor] = useState(false);
+  const [backendInput, setBackendInput] = useState(getApiBaseUrl());
+  const [urlSavedMsg, setUrlSavedMsg] = useState("");
+
+  const checkBackend = async () => {
+    try {
+      const res = await checkBackendHealth();
+      setBackendProbe(res);
+    } catch {
+      setBackendProbe({ ok: false, error: "Unreachable" });
+    }
+  };
+
+  useEffect(() => {
+    if (currentStep === 8) {
+      checkBackend();
+    }
+  }, [currentStep]);
 
   const handlePresetSelect = (preset) => {
     setFormData({
@@ -124,8 +149,30 @@ export default function OnboardingPage({ onPlanCreated, initialPreset }) {
       const planInit = await createPlan(formData);
       onPlanCreated(planInit, formData);
     } catch (err) {
-      setError(err.message || "Failed to initialize business plan");
+      console.warn("[NEXORA] createPlan API error:", err.message);
+      setError({
+        message: err.message || "HTTP 404",
+        url: getApiBaseUrl()
+      });
       setLoading(false);
+    }
+  };
+
+  const handleLaunchDemo = () => {
+    setError(null);
+    setLoading(true);
+    const demoPlan = createDemoPlan(formData);
+    onPlanCreated(demoPlan, formData);
+  };
+
+  const handleSaveBackendUrl = (e) => {
+    e?.preventDefault?.();
+    if (backendInput.trim()) {
+      setCustomApiBaseUrl(backendInput.trim());
+      setUrlSavedMsg(`Active backend updated to: ${backendInput.trim()}`);
+      setTimeout(() => setUrlSavedMsg(""), 3000);
+      checkBackend();
+      setError(null);
     }
   };
 
@@ -562,12 +609,27 @@ export default function OnboardingPage({ onPlanCreated, initialPreset }) {
         {/* STEP 8: Review & Launch */}
         {currentStep === 8 && (
           <div className="space-y-5 animate-fadeIn">
-            <div className="border-b border-gray-800 pb-3">
-              <span className="text-xs font-bold text-cyan-400 uppercase tracking-wider">Step 8 of 8</span>
-              <h2 className="text-xl font-bold text-white mt-1">Review & Launch 16 AI Agents</h2>
-              <p className="text-xs text-gray-400 mt-0.5">
-                Verify your assumptions before launching the parallel multi-agent orchestrator.
-              </p>
+            <div className="border-b border-gray-800 pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <span className="text-xs font-bold text-cyan-400 uppercase tracking-wider">Step 8 of 8</span>
+                <h2 className="text-xl font-bold text-white mt-1">Review & Launch 16 AI Agents</h2>
+                <p className="text-xs text-gray-400 mt-0.5">
+                  Verify your assumptions before launching the parallel multi-agent orchestrator.
+                </p>
+              </div>
+              <div className="flex items-center gap-2">
+                {backendProbe?.ok ? (
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    Live Backend Connected
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                    <AlertTriangle className="w-3.5 h-3.5" />
+                    Cloud Backend Offline
+                  </span>
+                )}
+              </div>
             </div>
 
             <div className="bg-[#0a0f1d] p-5 rounded-2xl border border-gray-800 space-y-3 text-xs">
@@ -603,9 +665,133 @@ export default function OnboardingPage({ onPlanCreated, initialPreset }) {
               </div>
             </div>
 
+            {/* Offline/Notice Pre-Launch Banner */}
+            {backendProbe && !backendProbe.ok && !error && (
+              <div className="p-4 bg-amber-500/10 border border-amber-500/30 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                <div className="space-y-0.5">
+                  <span className="font-bold text-amber-300 flex items-center gap-1.5">
+                    <Zap className="w-3.5 h-3.5 fill-current" />
+                    Live Cloud Backend Offline — Demo Mode Ready
+                  </span>
+                  <p className="text-gray-400 text-[11px]">
+                    No live backend server reachable at <code className="text-cyan-400">{getApiBaseUrl()}</code>. You can run in <strong>Demo Mode</strong> to simulate all 16 AI agents and generate the complete business plan.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleLaunchDemo}
+                  className="px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs shadow-md transition shrink-0 flex items-center gap-1.5"
+                >
+                  <Zap className="w-3.5 h-3.5 fill-current" />
+                  <span>Launch Demo Mode</span>
+                </button>
+              </div>
+            )}
+
+            {/* Resilient Error & Recovery Box */}
             {error && (
-              <div className="p-3 bg-rose-950/60 border border-rose-800 rounded-xl text-xs text-rose-300">
-                {error}
+              <div className="p-5 bg-gradient-to-b from-[#180d12] to-[#120a0e] border border-rose-500/40 rounded-2xl space-y-4 shadow-2xl animate-fadeIn">
+                <div className="flex items-start gap-3">
+                  <div className="p-2 rounded-xl bg-rose-500/10 text-rose-400 border border-rose-500/20 shrink-0">
+                    <AlertTriangle className="w-5 h-5" />
+                  </div>
+                  <div className="space-y-1 flex-1">
+                    <div className="flex items-center justify-between gap-2">
+                      <h4 className="text-sm font-bold text-white">
+                        Backend Service Unreachable ({error.message || "HTTP 404"})
+                      </h4>
+                      <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30 shrink-0">
+                        Backend Offline
+                      </span>
+                    </div>
+                    <p className="text-xs text-gray-300 leading-relaxed">
+                      The backend at <code className="text-cyan-300 px-1.5 py-0.5 bg-black/50 rounded font-mono">{error.url || getApiBaseUrl()}</code> returned <strong>{error.message || "HTTP 404"}</strong> (not deployed or unreachable).
+                    </p>
+                  </div>
+                </div>
+
+                <div className="p-3 bg-black/40 rounded-xl border border-gray-800 text-xs text-gray-300 space-y-1">
+                  <span className="font-semibold text-gray-200 block">Recommended Recovery Options:</span>
+                  <ul className="list-disc pl-4 space-y-0.5 text-gray-400 text-[11px]">
+                    <li><strong>Demo Mode:</strong> Run the complete 16-agent simulation locally inside the browser using industry benchmark data.</li>
+                    <li><strong>Custom / Local Backend:</strong> Point NEXORA to your running local FastAPI backend (<code className="text-cyan-400">http://localhost:8000</code>) or live cloud tunnel.</li>
+                  </ul>
+                </div>
+
+                <div className="pt-2 border-t border-rose-500/20 flex flex-wrap items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={handleLaunchDemo}
+                    className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-black font-extrabold text-xs shadow-lg shadow-amber-500/20 flex items-center gap-1.5 transition"
+                  >
+                    <Zap className="w-4 h-4 fill-current" />
+                    <span>Launch in Demo Mode (16 Agents)</span>
+                  </button>
+                  
+                  <button
+                    type="button"
+                    onClick={() => setShowUrlEditor(!showUrlEditor)}
+                    className="px-3.5 py-2 rounded-xl bg-gray-900 hover:bg-gray-800 text-gray-300 font-semibold text-xs border border-gray-700 flex items-center gap-1.5 transition"
+                  >
+                    <SettingsIcon className="w-3.5 h-3.5 text-cyan-400" />
+                    <span>{showUrlEditor ? "Hide URL Settings" : "Change Backend URL"}</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleSubmit}
+                    disabled={loading}
+                    className="px-3.5 py-2 rounded-xl bg-gray-900 hover:bg-gray-800 text-gray-300 font-semibold text-xs border border-gray-700 flex items-center gap-1.5 transition disabled:opacity-50"
+                  >
+                    <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />
+                    <span>Retry Connection</span>
+                  </button>
+                </div>
+
+                {showUrlEditor && (
+                  <div className="pt-3 border-t border-gray-800 space-y-2">
+                    <label className="text-[11px] text-gray-300 font-semibold block">
+                      Configure Live Backend Base URL:
+                    </label>
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        value={backendInput}
+                        onChange={(e) => setBackendInput(e.target.value)}
+                        placeholder="http://localhost:8000 or https://your-backend.onrender.com"
+                        className="flex-1 px-3 py-2 bg-black border border-gray-700 rounded-xl text-xs text-white font-mono placeholder-gray-600 focus:outline-none focus:border-cyan-500"
+                      />
+                      <button
+                        type="button"
+                        onClick={handleSaveBackendUrl}
+                        className="px-4 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-xs transition"
+                      >
+                        Apply URL
+                      </button>
+                    </div>
+                    {urlSavedMsg && (
+                      <p className="text-xs text-emerald-400 flex items-center gap-1">
+                        <Check className="w-3.5 h-3.5" />
+                        {urlSavedMsg}
+                      </p>
+                    )}
+                    <div className="flex gap-2 pt-1">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setBackendInput(LOCAL_DEV_DEFAULT_BACKEND);
+                          setCustomApiBaseUrl(LOCAL_DEV_DEFAULT_BACKEND);
+                          setUrlSavedMsg(`Set to ${LOCAL_DEV_DEFAULT_BACKEND}`);
+                          checkBackend();
+                          setTimeout(() => setUrlSavedMsg(""), 3000);
+                        }}
+                        className="text-[10px] text-cyan-400 hover:underline"
+                      >
+                        Use Localhost (http://localhost:8000)
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -634,15 +820,26 @@ export default function OnboardingPage({ onPlanCreated, initialPreset }) {
               <ArrowRight className="w-4 h-4" />
             </button>
           ) : (
-            <button
-              type="button"
-              onClick={handleSubmit}
-              disabled={loading}
-              className="px-6 py-3 bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-black font-extrabold text-sm rounded-xl shadow-xl shadow-cyan-500/30 flex items-center gap-2 transition disabled:opacity-50"
-            >
-              <Sparkles className="w-4 h-4 text-black" />
-              <span>{loading ? "Launching 16 Agents..." : "Launch 16 AI Agents"}</span>
-            </button>
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={handleLaunchDemo}
+                className="px-4 py-3 bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/30 font-bold text-xs rounded-xl flex items-center gap-1.5 transition"
+              >
+                <Zap className="w-4 h-4 fill-current" />
+                <span>Launch in Demo Mode</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleSubmit}
+                disabled={loading}
+                className="px-6 py-3 bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-black font-extrabold text-sm rounded-xl shadow-xl shadow-cyan-500/30 flex items-center gap-2 transition disabled:opacity-50"
+              >
+                <Sparkles className="w-4 h-4 text-black" />
+                <span>{loading ? "Launching 16 Agents..." : "Launch 16 AI Agents"}</span>
+              </button>
+            </div>
           )}
         </div>
 
