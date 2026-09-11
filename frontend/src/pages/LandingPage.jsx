@@ -30,19 +30,18 @@ export default function LandingPage({ setActivePage, onSelectPreset }) {
 
         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-900 border border-gray-800 text-xs text-gray-300 mb-6 shadow-sm">
           <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
-          <span>NEXORA 2.0 ? Autonomous Multi-Agent Planning Architecture</span>
+          <span>NEXORA 2.0 — Multi-Agent Agentic AI Business Launch Platform</span>
         </div>
 
         <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.15]">
-          From Capital <br className="hidden sm:inline" />
+          Turn Your Business Idea <br className="hidden sm:inline" />
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400">
-            to Thriving Business.
+            Into a Launch Plan.
           </span>
         </h1>
 
         <p className="mt-6 text-base sm:text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed">
-          Not a chatbot. NEXORA orchestrates <strong>13 specialized AI agents</strong> that conduct market research, 
-          stress-test capital allocations, validate regulatory compliance, and execute active critic loops to build your complete business plan.
+          NEXORA uses a team of AI agents to research, plan, validate, market, and build an actionable roadmap for your business.
         </p>
 
         {/* Action CTAs */}
@@ -51,16 +50,26 @@ export default function LandingPage({ setActivePage, onSelectPreset }) {
             onClick={() => setActivePage("onboarding")}
             className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-bold text-sm shadow-xl shadow-cyan-500/25 flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98]"
           >
-            <span>Create My Business Plan</span>
+            <span>Build My Business Plan</span>
             <ArrowRight className="w-4 h-4" />
           </button>
 
           <button
-            onClick={() => onSelectPreset(featuredPreset)}
-            className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-gray-900 hover:bg-gray-800 text-gray-200 border border-gray-700/80 font-semibold text-sm flex items-center justify-center gap-2.5 transition-colors shadow-sm"
+            onClick={() => {
+              const el = document.getElementById("how-it-works");
+              if (el) el.scrollIntoView({ behavior: "smooth" });
+            }}
+            className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-gray-900 hover:bg-gray-800 text-gray-200 border border-gray-700/80 font-semibold text-sm flex items-center justify-center gap-2 transition-colors shadow-sm"
           >
-            <Zap className="w-4 h-4 text-cyan-400" />
-            <span>Launch Hyderabad F&B Demo (?10L)</span>
+            <span>See How NEXORA Works</span>
+          </button>
+
+          <button
+            onClick={() => onSelectPreset(featuredPreset)}
+            className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-emerald-950/40 hover:bg-emerald-900/50 text-emerald-300 border border-emerald-500/40 font-semibold text-sm flex items-center justify-center gap-2.5 transition-colors shadow-sm"
+          >
+            <Zap className="w-4 h-4 text-emerald-400" />
+            <span>Launch Hyderabad Healthy Snacks Demo (₹3L)</span>
           </button>
         </div>
 

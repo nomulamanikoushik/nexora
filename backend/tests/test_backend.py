@@ -331,3 +331,38 @@ def test_signature_demo_home_based_snacks():
     # Check that home-based model did not incur commercial lease deposit
     assert "Setup & Lease Security Deposit" not in plan["capital_allocation"]["categories"]
 
+
+def test_22_section_report_and_business_profiles():
+    # 1. Test POST /api/v1/business-profiles
+    prof_payload = {
+        "business_name": "NutriBites Artisanal Kitchen",
+        "sector": "food-beverage",
+        "business_type": "Homemade Healthy Snacks",
+        "business_start_mode": "Home-Based",
+        "location": "Hyderabad",
+        "capital": 300000.0,
+        "currency": "INR",
+        "objective": "Launch lean home-based healthy snack brand",
+        "risk_preference": "Moderate",
+        "time_horizon": "3 years",
+        "experience_level": "Beginner"
+    }
+    p_resp = client.post("/api/v1/business-profiles", json=prof_payload)
+    assert p_resp.status_code == 200
+    p_data = p_resp.json()
+    assert p_data["id"] is not None
+
+    # 2. Test create plan and get 22-section report
+    create_resp = client.post("/api/v1/plans/", json=prof_payload)
+    plan_id = create_resp.json()["plan_id"]
+    client.post(f"/api/v1/plans/{plan_id}/execute-sync")
+
+    rep_resp = client.get(f"/api/v1/plans/{plan_id}/report")
+    assert rep_resp.status_code == 200
+    report = rep_resp.json()
+    assert "section_1_executive_summary" in report
+    assert "section_12_early_revenue_strategy" in report
+    assert "section_13_first_10_customers_plan" in report
+    assert "section_19_30_day_launch_plan" in report
+    assert "section_20_long_term_roadmap" in report
+    assert "section_22_confidence_and_disclaimer" in report
