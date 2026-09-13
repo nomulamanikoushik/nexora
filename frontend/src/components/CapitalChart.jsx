@@ -1,10 +1,10 @@
 import React from "react";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
-import { Shield, Sparkles } from "lucide-react";
+import { Shield, Sparkles, Coins } from "lucide-react";
 
 export default function CapitalChart({ chartData = [], totalCapital = 1000000, currency = "INR" }) {
   const COLORS = [
-    "#06B6D4", // Cyan - Setup
+    "#00F0FF", // Electric Cyan - Setup
     "#3B82F6", // Blue - Equipment
     "#6366F1", // Indigo - Inventory
     "#8B5CF6", // Purple - Staffing
@@ -23,21 +23,22 @@ export default function CapitalChart({ chartData = [], totalCapital = 1000000, c
   const safetyPercentage = totalCapital > 0 ? ((safetyBufferSum / totalCapital) * 100).toFixed(1) : 0;
 
   return (
-    <div className="bg-[#111827] border border-gray-800 rounded-2xl p-6 shadow-xl space-y-6">
+    <div className="glass-panel border border-white/[0.08] rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
       
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-gray-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-white/[0.08]">
         <div>
-          <h3 className="text-base font-bold text-gray-100 flex items-center gap-2">
-            Capital Allocation Breakdown
+          <h3 className="text-base font-bold text-white flex items-center gap-2">
+            <Coins className="w-4 h-4 text-cyan-400" />
+            <span>Capital Allocation Breakdown</span>
           </h3>
-          <p className="text-xs text-gray-400">
+          <p className="text-xs text-slate-400 mt-0.5">
             Total Starting Capital: <span className="text-cyan-400 font-mono font-semibold">{currency} {Number(totalCapital).toLocaleString()}</span>
           </p>
         </div>
 
-        <div className="flex items-center gap-2 text-xs bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-xl text-emerald-400">
-          <Shield className="w-4 h-4 text-emerald-400" />
+        <div className="flex items-center gap-2 text-xs bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-xl text-emerald-400 font-mono">
+          <Shield className="w-3.5 h-3.5 text-emerald-400" />
           <span>Safety Buffer: <strong>{safetyPercentage}%</strong> ({currency} {Number(safetyBufferSum).toLocaleString()})</span>
         </div>
       </div>
@@ -65,14 +66,14 @@ export default function CapitalChart({ chartData = [], totalCapital = 1000000, c
               </Pie>
               <Tooltip 
                 formatter={(value) => [`${currency} ${Number(value).toLocaleString()}`, "Amount"]}
-                contentStyle={{ backgroundColor: "#0B0F19", borderColor: "#374151", borderRadius: "10px", fontSize: "12px" }}
+                contentStyle={{ backgroundColor: "#070A12", borderColor: "rgba(255,255,255,0.1)", borderRadius: "12px", fontSize: "12px", boxShadow: "0 10px 25px -5px rgba(0,0,0,0.5)" }}
               />
             </PieChart>
           </ResponsiveContainer>
 
           {/* Center Hole Display */}
           <div className="absolute flex flex-col items-center justify-center pointer-events-none text-center">
-            <span className="text-xs text-gray-400 font-medium uppercase tracking-wider">Total</span>
+            <span className="text-[10px] text-slate-400 font-mono uppercase tracking-widest">Total</span>
             <span className="text-sm font-extrabold text-white font-mono">
               {currency} {(totalCapital / 100000).toFixed(1)}L
             </span>
@@ -84,18 +85,18 @@ export default function CapitalChart({ chartData = [], totalCapital = 1000000, c
           {chartData.map((item, idx) => (
             <div 
               key={idx} 
-              className="flex items-center justify-between text-xs p-2 rounded-lg bg-gray-900/60 border border-gray-800/80 hover:border-gray-700 transition-colors"
+              className="flex items-center justify-between text-xs p-2.5 rounded-xl glass-card border border-white/[0.06] hover:border-cyan-500/30 transition-colors"
             >
               <div className="flex items-center gap-2.5 truncate">
                 <span 
                   className="w-2.5 h-2.5 rounded-full shrink-0"
                   style={{ backgroundColor: COLORS[idx % COLORS.length] }}
-                ></span>
-                <span className="text-gray-300 font-medium truncate">{item.category}</span>
+                />
+                <span className="text-slate-300 font-medium truncate">{item.category}</span>
               </div>
-              <div className="flex items-center gap-3 shrink-0">
-                <span className="text-gray-400 font-mono text-[11px]">{item.percentage}%</span>
-                <span className="text-gray-100 font-mono font-semibold">{currency} {Number(item.amount).toLocaleString()}</span>
+              <div className="flex items-center gap-3 shrink-0 font-mono">
+                <span className="text-slate-400 text-[11px]">{item.percentage}%</span>
+                <span className="text-white font-semibold">{currency} {Number(item.amount).toLocaleString()}</span>
               </div>
             </div>
           ))}

@@ -10,48 +10,48 @@ export default function RevenueChart({ scenarios, monthlyProjections = [], curre
   const optimisticData = scenarios?.optimistic || {};
 
   return (
-    <div className="bg-[#111827] border border-gray-800 rounded-2xl p-6 shadow-xl space-y-6">
+    <div className="glass-panel border border-white/[0.08] rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
       
       {/* Header & Scenario Selector */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-gray-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/[0.08]">
         <div>
-          <h3 className="text-base font-bold text-gray-100 flex items-center gap-2">
+          <h3 className="text-base font-bold text-white flex items-center gap-2">
             <TrendingUp className="w-4 h-4 text-cyan-400" />
-            12-Month Financial Projections & Break-Even
+            <span>12-Month Financial Projections & Break-Even</span>
           </h3>
-          <p className="text-xs text-gray-400">
+          <p className="text-xs text-slate-400 mt-0.5">
             Conservative, Baseline, and Optimistic curves vs total monthly operating burn.
           </p>
         </div>
 
         {/* Tabs */}
-        <div className="flex items-center gap-1 bg-gray-900 p-1 rounded-xl border border-gray-800 self-start sm:self-auto">
+        <div className="flex items-center gap-1 glass-card p-1 rounded-xl border border-white/[0.08] self-start sm:self-auto font-mono text-xs">
           <button
             onClick={() => setActiveTab("conservative")}
-            className={`px-3 py-1 text-xs font-semibold rounded-lg transition-all ${
+            className={`px-3 py-1.5 rounded-lg transition-all ${
               activeTab === "conservative" 
-                ? "bg-amber-500/20 text-amber-300 border border-amber-500/30" 
-                : "text-gray-400 hover:text-gray-200"
+                ? "bg-amber-500/20 text-amber-300 border border-amber-500/30 font-bold" 
+                : "text-slate-400 hover:text-slate-200"
             }`}
           >
             Conservative
           </button>
           <button
             onClick={() => setActiveTab("baseline")}
-            className={`px-3 py-1 text-xs font-semibold rounded-lg transition-all ${
+            className={`px-3 py-1.5 rounded-lg transition-all ${
               activeTab === "baseline" 
-                ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/30" 
-                : "text-gray-400 hover:text-gray-200"
+                ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-bold" 
+                : "text-slate-400 hover:text-slate-200"
             }`}
           >
-            Baseline (Target)
+            Baseline
           </button>
           <button
             onClick={() => setActiveTab("optimistic")}
-            className={`px-3 py-1 text-xs font-semibold rounded-lg transition-all ${
+            className={`px-3 py-1.5 rounded-lg transition-all ${
               activeTab === "optimistic" 
-                ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30" 
-                : "text-gray-400 hover:text-gray-200"
+                ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-bold" 
+                : "text-slate-400 hover:text-slate-200"
             }`}
           >
             Optimistic
@@ -61,28 +61,28 @@ export default function RevenueChart({ scenarios, monthlyProjections = [], curre
 
       {/* Scenario Stat Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        <div className={`p-3 rounded-xl border transition-all ${activeTab === "conservative" ? "bg-amber-950/20 border-amber-500/40" : "bg-gray-900/60 border-gray-800"}`}>
-          <div className="text-[11px] text-amber-400 uppercase font-semibold">Conservative</div>
-          <div className="text-sm font-bold text-white font-mono mt-0.5">
+        <div className={`p-3.5 rounded-2xl border transition-all ${activeTab === "conservative" ? "bg-amber-950/20 border-amber-500/40 glow-amber-sm" : "glass-card border-white/[0.06]"}`}>
+          <div className="text-[11px] text-amber-400 uppercase font-mono font-semibold">Conservative</div>
+          <div className="text-sm font-bold text-white font-mono mt-1">
             {currency} {Number(conservativeData.year1_revenue || 0).toLocaleString()}
           </div>
-          <div className="text-[10px] text-gray-400 mt-1">Break-even: Month {conservativeData.break_even_month || 9}</div>
+          <div className="text-[10px] text-slate-400 mt-1 font-mono">Break-even: Month {conservativeData.break_even_month || 9}</div>
         </div>
 
-        <div className={`p-3 rounded-xl border transition-all ${activeTab === "baseline" ? "bg-cyan-950/20 border-cyan-500/40" : "bg-gray-900/60 border-gray-800"}`}>
-          <div className="text-[11px] text-cyan-400 uppercase font-semibold">Baseline Target</div>
-          <div className="text-sm font-bold text-white font-mono mt-0.5">
+        <div className={`p-3.5 rounded-2xl border transition-all ${activeTab === "baseline" ? "bg-cyan-950/20 border-cyan-500/40 glow-cyan-sm" : "glass-card border-white/[0.06]"}`}>
+          <div className="text-[11px] text-cyan-400 uppercase font-mono font-semibold">Baseline Target</div>
+          <div className="text-sm font-bold text-white font-mono mt-1">
             {currency} {Number(baselineData.year1_revenue || 0).toLocaleString()}
           </div>
-          <div className="text-[10px] text-gray-400 mt-1">Break-even: Month {baselineData.break_even_month || 6}</div>
+          <div className="text-[10px] text-slate-400 mt-1 font-mono">Break-even: Month {baselineData.break_even_month || 6}</div>
         </div>
 
-        <div className={`p-3 rounded-xl border transition-all ${activeTab === "optimistic" ? "bg-emerald-950/20 border-emerald-500/40" : "bg-gray-900/60 border-gray-800"}`}>
-          <div className="text-[11px] text-emerald-400 uppercase font-semibold">Optimistic Scale</div>
-          <div className="text-sm font-bold text-white font-mono mt-0.5">
+        <div className={`p-3.5 rounded-2xl border transition-all ${activeTab === "optimistic" ? "bg-emerald-950/20 border-emerald-500/40 glow-emerald-sm" : "glass-card border-white/[0.06]"}`}>
+          <div className="text-[11px] text-emerald-400 uppercase font-mono font-semibold">Optimistic Scale</div>
+          <div className="text-sm font-bold text-white font-mono mt-1">
             {currency} {Number(optimisticData.year1_revenue || 0).toLocaleString()}
           </div>
-          <div className="text-[10px] text-gray-400 mt-1">Break-even: Month {optimisticData.break_even_month || 4}</div>
+          <div className="text-[10px] text-slate-400 mt-1 font-mono">Break-even: Month {optimisticData.break_even_month || 4}</div>
         </div>
       </div>
 
@@ -92,66 +92,37 @@ export default function RevenueChart({ scenarios, monthlyProjections = [], curre
           <AreaChart data={monthlyProjections} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
             <defs>
               <linearGradient id="colorBaseline" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#06B6D4" stopOpacity={0.4}/>
-                <stop offset="95%" stopColor="#06B6D4" stopOpacity={0.0}/>
+                <stop offset="5%" stopColor="#00F0FF" stopOpacity={0.4}/>
+                <stop offset="95%" stopColor="#00F0FF" stopOpacity={0.0}/>
               </linearGradient>
               <linearGradient id="colorConservative" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="#F59E0B" stopOpacity={0.3}/>
                 <stop offset="95%" stopColor="#F59E0B" stopOpacity={0.0}/>
               </linearGradient>
+              <linearGradient id="colorOptimistic" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#10B981" stopOpacity={0.4}/>
+                <stop offset="95%" stopColor="#10B981" stopOpacity={0.0}/>
+              </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="#1F2937" vertical={false} />
-            <XAxis dataKey="month" stroke="#6B7280" tick={{ fontSize: 11 }} />
-            <YAxis 
-              stroke="#6B7280" 
-              tick={{ fontSize: 11 }}
-              tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`} 
-            />
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+            <XAxis dataKey="month" stroke="#64748B" fontSize={11} tickLine={false} />
+            <YAxis stroke="#64748B" fontSize={11} tickLine={false} tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`} />
             <Tooltip 
-              formatter={(value, name) => [`${currency} ${Number(value).toLocaleString()}`, name.replace(/_/g, " ").toUpperCase()]}
-              contentStyle={{ backgroundColor: "#0B0F19", borderColor: "#374151", borderRadius: "10px", fontSize: "12px" }}
-            />
-            <Legend wrapperStyle={{ fontSize: "11px", paddingTop: "10px" }} />
-            
-            {/* Cost Line */}
-            <Line 
-              type="monotone" 
-              dataKey="projected_total_cost" 
-              name="Monthly Burn & Opex" 
-              stroke="#F43F5E" 
-              strokeWidth={2} 
-              dot={false}
-              strokeDasharray="4 4"
+              formatter={(value) => [`${currency} ${Number(value).toLocaleString()}`]}
+              contentStyle={{ backgroundColor: "#070A12", borderColor: "rgba(255,255,255,0.1)", borderRadius: "12px", fontSize: "12px", boxShadow: "0 10px 25px -5px rgba(0,0,0,0.5)" }}
             />
             
-            {/* Revenue Curves */}
-            <Area 
-              type="monotone" 
-              dataKey="conservative_revenue" 
-              name="Conservative Rev" 
-              stroke="#F59E0B" 
-              strokeWidth={1.5}
-              fillOpacity={1} 
-              fill="url(#colorConservative)" 
-            />
-            <Area 
-              type="monotone" 
-              dataKey="baseline_revenue" 
-              name="Baseline Rev (Target)" 
-              stroke="#06B6D4" 
-              strokeWidth={2.5}
-              fillOpacity={1} 
-              fill="url(#colorBaseline)" 
-            />
-            <Line 
-              type="monotone" 
-              dataKey="optimistic_revenue" 
-              name="Optimistic Rev" 
-              stroke="#10B981" 
-              strokeWidth={1.5}
-              strokeDasharray="2 2"
-              dot={false}
-            />
+            {activeTab === "baseline" && (
+              <Area type="monotone" dataKey="revenue" stroke="#00F0FF" strokeWidth={2.5} fillOpacity={1} fill="url(#colorBaseline)" name="Revenue (Baseline)" />
+            )}
+            {activeTab === "conservative" && (
+              <Area type="monotone" dataKey="conservative_revenue" stroke="#F59E0B" strokeWidth={2.5} fillOpacity={1} fill="url(#colorConservative)" name="Revenue (Conservative)" />
+            )}
+            {activeTab === "optimistic" && (
+              <Area type="monotone" dataKey="optimistic_revenue" stroke="#10B981" strokeWidth={2.5} fillOpacity={1} fill="url(#colorOptimistic)" name="Revenue (Optimistic)" />
+            )}
+
+            <Line type="monotone" dataKey="cost" stroke="#F43F5E" strokeWidth={2} strokeDasharray="4 4" dot={false} name="Monthly Cost Burn" />
           </AreaChart>
         </ResponsiveContainer>
       </div>

@@ -17,7 +17,9 @@ import {
   Edit3,
   Check,
   Download,
-  Bookmark
+  Bookmark,
+  Activity,
+  Zap
 } from "lucide-react";
 import AgentCard from "../components/AgentCard";
 import { 
@@ -336,61 +338,62 @@ export default function AgentWorkspacePage({ planInit, onPlanComplete, setActive
       
       {/* Demo Mode Notice Banner */}
       {connectionState === "demo" && (
-        <div className="bg-amber-500/10 border border-amber-500/40 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-amber-200 text-xs">
-          <div className="flex items-center gap-2 font-semibold">
-            <span className="px-2 py-0.5 rounded bg-amber-500/30 text-amber-300 font-mono font-bold text-[10px] uppercase">
+        <div className="glass-panel border-amber-500/40 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-amber-200 text-xs shadow-lg shadow-amber-500/5">
+          <div className="flex items-center gap-2.5 font-semibold">
+            <span className="px-2.5 py-1 rounded-md bg-amber-500/20 text-amber-300 font-mono font-bold text-[10px] uppercase border border-amber-500/30">
               Demo Mode Active
             </span>
-            <span>Simulating multi-agent pipeline locally (Backend is offline or disconnected).</span>
+            <span className="text-slate-300">Simulating multi-agent pipeline in browser (Backend is offline or disconnected).</span>
           </div>
           <button
             onClick={startPipeline}
-            className="px-3 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 border border-amber-500/40 font-semibold transition shrink-0"
+            className="px-3.5 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 border border-amber-500/40 font-semibold transition shrink-0 flex items-center gap-1.5"
           >
-            Retry Real Backend
+            <RefreshCw className="w-3 h-3" />
+            <span>Retry Real Backend</span>
           </button>
         </div>
       )}
 
       {/* Backend Connection Error Modal / Card */}
       {connectionState === "failed" && connectionError && (
-        <div className="bg-rose-950/20 border-2 border-rose-500/60 rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl animate-fade-in">
+        <div className="bg-gradient-to-b from-rose-950/30 to-[#100b12] border-2 border-rose-500/50 rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl animate-fade-in">
           <div className="flex items-start gap-4">
             <div className="w-12 h-12 rounded-2xl bg-rose-500/20 border border-rose-500/40 flex items-center justify-center shrink-0 text-rose-400">
               <AlertCircle className="w-6 h-6" />
             </div>
-            <div className="space-y-1 flex-1">
+            <div className="space-y-1.5 flex-1">
               <div className="flex items-center gap-2">
-                <span className="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 text-[10px] font-mono uppercase font-bold border border-rose-500/30">
+                <span className="px-2.5 py-0.5 rounded bg-rose-500/20 text-rose-300 text-[10px] font-mono uppercase font-bold border border-rose-500/30">
                   Connection Failed
                 </span>
-                <span className="text-xs text-gray-400">Pre-flight Verification</span>
+                <span className="text-xs text-slate-400">Pre-flight Verification</span>
               </div>
               <h2 className="text-xl sm:text-2xl font-extrabold text-white">
                 Unable to connect to NEXORA AI backend
               </h2>
-              <p className="text-xs sm:text-sm text-gray-300">
+              <p className="text-xs sm:text-sm text-slate-300">
                 The frontend cannot communicate with the FastAPI orchestrator service. The orchestration was stopped to prevent an infinite loading screen.
               </p>
             </div>
           </div>
 
           {/* Diagnostic Details */}
-          <div className="bg-black/60 border border-gray-800 rounded-2xl p-4 space-y-3 font-mono text-xs">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-800 pb-2">
-              <span className="text-gray-400">Target Backend URL:</span>
+          <div className="bg-black/60 border border-white/[0.08] rounded-2xl p-4 sm:p-5 space-y-3 font-mono text-xs">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/[0.08] pb-2.5">
+              <span className="text-slate-400">Target Backend URL:</span>
               <span className="text-cyan-400 font-bold break-all">{connectionError.url}</span>
             </div>
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-800 pb-2">
-              <span className="text-gray-400">Status / Reason:</span>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/[0.08] pb-2.5">
+              <span className="text-slate-400">Status / Reason:</span>
               <span className="text-rose-400 font-bold">{connectionError.error || "Connection Refused / Timed Out"}</span>
             </div>
-            <div className="space-y-1 text-gray-400 pt-1 text-[11px]">
-              <strong className="text-gray-300 block">Common Root Causes:</strong>
+            <div className="space-y-1 text-slate-400 pt-1 text-[11px]">
+              <strong className="text-slate-300 block">Common Root Causes:</strong>
               <ul className="list-disc list-inside space-y-1 pl-1">
                 <li>FastAPI backend server is currently offline or sleeping (e.g. Render free instance).</li>
                 <li>Incorrect API URL configured in environment variables or deployment settings.</li>
-                <li>CORS policy blocked request from <code className="text-gray-200">https://nomulamanikoushik.github.io</code>.</li>
+                <li>CORS policy blocked request from origin.</li>
                 <li>Server-Sent Events (SSE) streaming endpoint is blocked by proxy or firewall.</li>
               </ul>
             </div>
@@ -400,7 +403,7 @@ export default function AgentWorkspacePage({ planInit, onPlanComplete, setActive
           <div className="flex flex-wrap items-center gap-3 pt-2">
             <button
               onClick={startPipeline}
-              className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs shadow-lg shadow-cyan-500/20 flex items-center gap-2 transition-all"
+              className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-600 hover:from-cyan-300 hover:to-blue-500 text-slate-950 font-bold text-xs shadow-lg shadow-cyan-500/20 flex items-center gap-2 transition-all"
             >
               <RefreshCw className="w-3.5 h-3.5" />
               <span>Retry Connection</span>
@@ -408,7 +411,7 @@ export default function AgentWorkspacePage({ planInit, onPlanComplete, setActive
 
             <button
               onClick={() => setIsEditingUrl(!isEditingUrl)}
-              className="px-4 py-2.5 rounded-xl bg-gray-900 hover:bg-gray-800 text-gray-200 border border-gray-700 text-xs font-semibold flex items-center gap-2 transition-colors"
+              className="px-4 py-2.5 rounded-xl glass-card hover:bg-white/10 text-slate-200 border border-white/[0.1] text-xs font-semibold flex items-center gap-2 transition-colors"
             >
               <Edit3 className="w-3.5 h-3.5 text-cyan-400" />
               <span>{isEditingUrl ? "Cancel" : "Change Backend URL"}</span>
@@ -416,17 +419,17 @@ export default function AgentWorkspacePage({ planInit, onPlanComplete, setActive
 
             <button
               onClick={handleStartDemoMode}
-              className="px-4 py-2.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 border border-amber-500/40 text-xs font-semibold flex items-center gap-2 transition-all"
+              className="px-5 py-2.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 border border-amber-500/40 text-xs font-bold flex items-center gap-2 transition-all shadow-md shadow-amber-500/10"
             >
-              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              <Zap className="w-3.5 h-3.5 text-amber-400 fill-current" />
               <span>Continue in Demo Mode</span>
             </button>
           </div>
 
           {/* Inline Backend URL Editor */}
           {isEditingUrl && (
-            <form onSubmit={handleSaveCustomBackendUrl} className="p-4 bg-gray-900 rounded-2xl border border-gray-800 space-y-3">
-              <label className="block text-xs font-semibold text-gray-300">
+            <form onSubmit={handleSaveCustomBackendUrl} className="p-4 bg-black/70 rounded-2xl border border-white/[0.08] space-y-3">
+              <label className="block text-xs font-semibold text-slate-300">
                 Specify Custom Backend URL (e.g., http://localhost:8000 or https://your-backend.onrender.com)
               </label>
               <div className="flex flex-col sm:flex-row gap-2">
@@ -435,12 +438,12 @@ export default function AgentWorkspacePage({ planInit, onPlanComplete, setActive
                   value={backendUrlInput}
                   onChange={(e) => setBackendUrlInput(e.target.value)}
                   placeholder="https://your-app.onrender.com"
-                  className="flex-1 bg-black border border-gray-700 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-cyan-500 font-mono"
+                  className="flex-1 bg-black border border-white/[0.1] rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-cyan-400 font-mono"
                   required
                 />
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-xs rounded-xl transition flex items-center justify-center gap-1.5"
+                  className="px-4 py-2 bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-bold text-xs rounded-xl transition flex items-center justify-center gap-1.5"
                 >
                   <Check className="w-3.5 h-3.5" />
                   <span>Save & Test</span>
@@ -452,52 +455,57 @@ export default function AgentWorkspacePage({ planInit, onPlanComplete, setActive
       )}
 
       {/* Header & Orchestrator Progress Banner */}
-      <div className="bg-[#111827] border border-gray-800 rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl">
+      <div className="glass-panel rounded-3xl p-6 sm:p-8 space-y-6 border border-white/[0.08] shadow-2xl">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div className="space-y-1">
-            <div className="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
-              <Cpu className={`w-3.5 h-3.5 ${progress > 0 && progress < 100 ? "animate-spin" : ""}`} />
+          <div className="space-y-2">
+            <div className="inline-flex items-center gap-2 text-xs font-mono font-semibold px-3 py-1.5 rounded-full glass-pill text-cyan-300 border border-cyan-500/20 glow-cyan-sm">
+              <Cpu className={`w-3.5 h-3.5 text-cyan-400 ${progress > 0 && progress < 100 ? "animate-spin" : ""}`} />
               <span>NEXORA 16-Agent Autonomous Pipeline</span>
               {connectionState === "demo" && (
-                <span className="ml-1 text-[10px] px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                <span className="ml-1 text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
                   Demo
                 </span>
               )}
             </div>
-            <h1 className="text-xl sm:text-3xl font-extrabold text-white">
+            <h1 className="text-xl sm:text-3xl font-extrabold text-white tracking-tight">
               {planInit?.business_name || "Autonomous Business Planning"}
             </h1>
-            <p className="text-xs sm:text-sm text-gray-400 flex items-center gap-2">
+            <p className="text-xs sm:text-sm text-slate-400 flex items-center gap-2 font-mono">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400"></span>
+              </span>
               <span>{currentMessage}</span>
             </p>
           </div>
 
           {/* Completed State Actions: Business Plan Ready */}
           {completed && (
-            <div className="flex flex-wrap items-center gap-2.5">
+            <div className="flex flex-wrap items-center gap-2.5 animate-fadeIn">
               <button
                 onClick={() => setActivePage("first_customers")}
-                className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs shadow-lg shadow-emerald-500/20 flex items-center gap-1.5 transition-all"
+                className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-extrabold text-xs shadow-lg shadow-emerald-500/20 flex items-center gap-1.5 transition-all"
               >
-                <Sparkles className="w-3.5 h-3.5" />
+                <Sparkles className="w-3.5 h-3.5 text-slate-950 fill-current" />
                 <span>First Customers</span>
               </button>
               <button
                 onClick={() => setActivePage("growth")}
-                className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white font-bold text-xs shadow-lg shadow-violet-500/20 flex items-center gap-1.5 transition-all"
+                className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-violet-500 to-indigo-500 hover:from-violet-400 hover:to-indigo-400 text-white font-bold text-xs shadow-lg shadow-violet-500/20 flex items-center gap-1.5 transition-all"
               >
+                <Activity className="w-3.5 h-3.5" />
                 <span>Growth Strategy</span>
               </button>
               <button
                 onClick={() => setActivePage("dashboard")}
-                className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs shadow-lg shadow-cyan-500/20 flex items-center gap-2 transition-all"
+                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-600 hover:from-cyan-300 hover:to-blue-500 text-slate-950 font-bold text-xs shadow-lg shadow-cyan-500/20 flex items-center gap-2 transition-all"
               >
                 <span>Dashboard</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
               <button
                 onClick={() => setActivePage("plan")}
-                className="px-4 py-2.5 rounded-xl bg-gray-900 hover:bg-gray-800 text-gray-200 border border-gray-700 font-semibold text-xs flex items-center gap-2 transition-colors"
+                className="px-4 py-2.5 rounded-xl glass-card hover:bg-white/10 text-slate-200 border border-white/[0.1] font-semibold text-xs flex items-center gap-2 transition-colors"
               >
                 <FileText className="w-3.5 h-3.5 text-cyan-400" />
                 <span>Full Plan</span>
@@ -506,28 +514,28 @@ export default function AgentWorkspacePage({ planInit, onPlanComplete, setActive
           )}
         </div>
 
-        {/* Progress Bar */}
+        {/* Progress Bar with Glow */}
         <div className="space-y-2">
-          <div className="flex justify-between text-xs">
-            <span className="text-gray-400 font-medium">
+          <div className="flex justify-between text-xs font-mono">
+            <span className="text-slate-400 font-medium">
               Orchestration Progress ({completedAgentsCount} of {agents.length} nodes active)
             </span>
-            <span className="text-cyan-400 font-mono font-bold">{progress}%</span>
+            <span className="text-cyan-400 font-bold">{progress}%</span>
           </div>
-          <div className="h-2.5 w-full bg-gray-900 rounded-full overflow-hidden border border-gray-800">
+          <div className="h-3 w-full bg-[#070A12] rounded-full overflow-hidden border border-white/[0.08] p-0.5 shadow-inner">
             <div 
-              className="h-full bg-gradient-to-r from-cyan-500 via-blue-500 to-emerald-400 rounded-full transition-all duration-500"
+              className="h-full bg-gradient-to-r from-cyan-400 via-blue-500 to-emerald-400 rounded-full transition-all duration-500 shadow-md shadow-cyan-500/30"
               style={{ width: `${progress}%` }}
-            ></div>
+            />
           </div>
         </div>
 
         {/* Critic Feedback Banner */}
         {criticAlert && (
-          <div className={`p-4 rounded-xl border flex items-start gap-3 text-xs transition-all ${
+          <div className={`p-4 rounded-2xl border flex items-start gap-3.5 text-xs transition-all ${
             criticAlert.severity === "warning"
-              ? "bg-amber-500/10 border-amber-500/40 text-amber-200 animate-pulse"
-              : "bg-emerald-500/10 border-emerald-500/40 text-emerald-200"
+              ? "bg-amber-500/10 border-amber-500/40 text-amber-200 animate-pulse shadow-lg shadow-amber-500/5"
+              : "bg-emerald-500/10 border-emerald-500/40 text-emerald-200 shadow-lg shadow-emerald-500/5"
           }`}>
             {criticAlert.severity === "warning" ? (
               <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
@@ -535,8 +543,8 @@ export default function AgentWorkspacePage({ planInit, onPlanComplete, setActive
               <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
             )}
             <div>
-              <strong className="font-bold block mb-0.5">{criticAlert.title}</strong>
-              <p className="opacity-90">{criticAlert.message}</p>
+              <strong className="font-bold block mb-0.5 font-mono text-[11px]">{criticAlert.title}</strong>
+              <p className="opacity-90 leading-relaxed text-slate-300">{criticAlert.message}</p>
             </div>
           </div>
         )}
@@ -548,12 +556,12 @@ export default function AgentWorkspacePage({ planInit, onPlanComplete, setActive
         {/* Agent Cards Grid */}
         <div className="lg:col-span-7 space-y-4">
           <div className="flex items-center justify-between pb-1">
-            <h3 className="text-sm font-bold text-gray-200 flex items-center gap-2">
+            <h3 className="text-sm font-bold text-slate-200 flex items-center gap-2">
               <Layers className="w-4 h-4 text-cyan-400" />
-              Specialized Agents ({agents.length} Nodes)
+              <span>Specialized Agents ({agents.length} Nodes)</span>
             </h3>
-            <span className="text-xs text-gray-400">
-              {completedAgentsCount} / {agents.length} Completed
+            <span className="text-xs font-mono text-slate-400">
+              {completedAgentsCount} / {agents.length} Active Nodes
             </span>
           </div>
 
@@ -578,44 +586,58 @@ export default function AgentWorkspacePage({ planInit, onPlanComplete, setActive
         {/* Live Terminal / Collaboration Stream */}
         <div className="lg:col-span-5 space-y-4">
           <div className="flex items-center justify-between pb-1">
-            <h3 className="text-sm font-bold text-gray-200 flex items-center gap-2">
+            <h3 className="text-sm font-bold text-slate-200 flex items-center gap-2">
               <Terminal className="w-4 h-4 text-indigo-400" />
-              Live Agent Collaboration Stream
+              <span>Live Agent Collaboration Stream</span>
             </h3>
-            <span className="text-[10px] uppercase font-mono text-emerald-400 flex items-center gap-1">
-              <span className={`w-1.5 h-1.5 rounded-full ${progress > 0 && progress < 100 ? "bg-emerald-400 animate-ping" : "bg-emerald-500"}`}></span>
+            <span className="text-[10px] uppercase font-mono text-emerald-400 flex items-center gap-1.5 px-2.5 py-1 rounded-full glass-card border-white/[0.08]">
+              <span className={`w-1.5 h-1.5 rounded-full ${progress > 0 && progress < 100 ? "bg-emerald-400 animate-ping" : "bg-emerald-400"}`}></span>
               {connectionState === "demo" ? "Local Stream" : "Live SSE Feed"}
             </span>
           </div>
 
-          <div 
-            ref={logContainerRef}
-            className="bg-black/80 border border-gray-800 rounded-2xl p-4 h-[640px] overflow-y-auto font-['JetBrains_Mono',monospace] text-[11px] space-y-2.5 shadow-inner"
-          >
-            {logs.length === 0 ? (
-              <div className="text-gray-600 italic">Awaiting connection to orchestrator stream...</div>
-            ) : (
-              logs.map((log, idx) => (
-                <div key={idx} className="space-y-0.5 leading-relaxed">
-                  <div className="flex items-center gap-2 text-gray-500 text-[10px]">
-                    <span>[{log.timestamp}]</span>
-                    <span className="text-cyan-400 font-bold uppercase">{log.agent}</span>
-                    <span className={`px-1 rounded text-[9px] ${
-                      log.status === "completed" ? "text-emerald-400 bg-emerald-950/40" :
-                      log.status === "revising" ? "text-amber-400 bg-amber-950/40" :
-                      log.status === "failed" ? "text-rose-400 bg-rose-950/40" :
-                      log.status === "demo" ? "text-amber-400 bg-amber-950/30" :
-                      "text-blue-400 bg-blue-950/40"
-                    }`}>
-                      {log.status}
-                    </span>
+          {/* Console Shell */}
+          <div className="glass-panel border border-white/[0.08] rounded-2xl overflow-hidden shadow-2xl">
+            {/* Terminal Window Top Bar */}
+            <div className="px-4 py-2.5 bg-black/60 border-b border-white/[0.06] flex items-center justify-between">
+              <div className="flex items-center gap-1.5">
+                <div className="w-2.5 h-2.5 rounded-full bg-rose-500/80" />
+                <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
+                <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
+              </div>
+              <span className="text-[10px] font-mono text-slate-500">nexora-orchestrator-stdout</span>
+              <div className="w-8" />
+            </div>
+
+            <div 
+              ref={logContainerRef}
+              className="bg-[#050810]/95 p-4 h-[640px] overflow-y-auto font-mono text-[11px] space-y-3"
+            >
+              {logs.length === 0 ? (
+                <div className="text-slate-600 italic">Awaiting connection to orchestrator stream...</div>
+              ) : (
+                logs.map((log, idx) => (
+                  <div key={idx} className="space-y-1 leading-relaxed">
+                    <div className="flex items-center gap-2 text-slate-500 text-[10px]">
+                      <span>[{log.timestamp}]</span>
+                      <span className="text-cyan-400 font-bold uppercase">{log.agent}</span>
+                      <span className={`px-1.5 py-0.2 rounded text-[9px] font-semibold ${
+                        log.status === "completed" ? "text-emerald-300 bg-emerald-950/60 border border-emerald-800/40" :
+                        log.status === "revising" ? "text-amber-300 bg-amber-950/60 border border-amber-800/40" :
+                        log.status === "failed" ? "text-rose-300 bg-rose-950/60 border border-rose-800/40" :
+                        log.status === "demo" ? "text-amber-300 bg-amber-950/50 border border-amber-800/30" :
+                        "text-cyan-300 bg-cyan-950/60 border border-cyan-800/40"
+                      }`}>
+                        {log.status}
+                      </span>
+                    </div>
+                    <div className="text-slate-300 pl-2.5 border-l-2 border-white/[0.08]">
+                      {log.message}
+                    </div>
                   </div>
-                  <div className="text-gray-300 pl-2 border-l border-gray-800">
-                    {log.message}
-                  </div>
-                </div>
-              ))
-            )}
+                ))
+              )}
+            </div>
           </div>
         </div>
 

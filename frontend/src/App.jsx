@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import LandingPage from "./pages/LandingPage";
@@ -56,7 +56,7 @@ export default function App() {
   const showSidebar = !["landing", "onboarding"].includes(activePage);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#090D16] text-slate-100 font-['Plus_Jakarta_Sans',sans-serif]">
+    <div className="min-h-screen flex flex-col bg-[#070A12] mesh-bg text-slate-100 font-['Plus_Jakarta_Sans',sans-serif] selection:bg-cyan-500 selection:text-black">
       {/* Top Header */}
       <Navbar 
         activePage={activePage} 

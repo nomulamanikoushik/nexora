@@ -69,35 +69,35 @@ export default function SettingsPage() {
     <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
       
       {/* Header */}
-      <div className="pb-6 border-b border-gray-800">
-        <div className="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 mb-2">
-          <SettingsIcon className="w-3.5 h-3.5" />
-          System Settings & Integrations
+      <div className="pb-6 border-b border-white/[0.08]">
+        <div className="inline-flex items-center gap-2 text-xs font-mono font-semibold px-3 py-1.5 rounded-full glass-pill text-cyan-300 border border-cyan-500/20 mb-3 glow-cyan-sm">
+          <SettingsIcon className="w-3.5 h-3.5 text-cyan-400" />
+          <span>System Settings & Integrations</span>
         </div>
         <h1 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
           Platform Architecture & Config
         </h1>
-        <p className="text-xs sm:text-sm text-gray-400 mt-1">
-          NEXORA: Intelligent multiagent for business planning startup Planning
+        <p className="text-xs sm:text-sm text-slate-400 mt-1">
+          NEXORA: Intelligent multi-agent autonomous business planning platform
         </p>
       </div>
 
       {/* Backend API Server Endpoint Configuration */}
-      <div className="bg-[#111827] border border-gray-800 rounded-2xl p-6 sm:p-8 shadow-xl space-y-6">
+      <div className="glass-panel border border-white/[0.08] rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="space-y-1">
             <h3 className="text-base font-bold text-white flex items-center gap-2">
               <Server className="w-4 h-4 text-cyan-400" />
-              Backend API Server Endpoint
+              <span>Backend API Server Endpoint</span>
             </h3>
-            <p className="text-xs text-gray-400 leading-relaxed">
-              Configure which FastAPI backend service powers NEXORA's 16 agent orchestration engine and plan generation.
+            <p className="text-xs text-slate-400 leading-relaxed">
+              Configure which FastAPI backend service powers NEXORA's 16-agent orchestration engine and plan generation.
             </p>
           </div>
-          <div className="flex items-center gap-2">
-            <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border ${
+          <div className="flex items-center gap-2 shrink-0">
+            <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono font-semibold border ${
               healthStatus === "operational" 
-                ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" 
+                ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20 glow-emerald-sm" 
                 : healthStatus === "offline"
                 ? "bg-rose-500/10 text-rose-400 border-rose-500/20"
                 : "bg-amber-500/10 text-amber-400 border-amber-500/20"
@@ -124,38 +124,38 @@ export default function SettingsPage() {
 
         <form onSubmit={handleSaveBackend} className="space-y-4">
           <div>
-            <label className="text-xs font-semibold text-gray-300 block mb-1.5">
+            <label className="text-xs font-semibold text-slate-300 block mb-2 font-mono">
               Active Backend Base URL
             </label>
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2.5">
               <div className="relative flex-1">
-                <Globe className="w-4 h-4 text-gray-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <Globe className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
                   value={backendInput}
                   onChange={(e) => setBackendInput(e.target.value)}
                   placeholder="https://your-backend.onrender.com or http://localhost:8000"
-                  className="w-full pl-10 pr-3.5 py-2.5 bg-gray-900 border border-gray-800 rounded-xl text-xs text-white font-mono placeholder-gray-600 focus:outline-none focus:border-cyan-500"
+                  className="w-full pl-10 pr-3.5 py-2.5 bg-[#070A12]/90 border border-white/[0.1] rounded-xl text-xs text-white font-mono placeholder-slate-600 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/50"
                 />
               </div>
               <button
                 type="button"
                 onClick={probeBackend}
                 disabled={isCheckingBackend}
-                className="px-4 py-2.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-gray-300 font-semibold text-xs border border-gray-700 flex items-center gap-1.5 transition-all disabled:opacity-50"
+                className="px-4 py-2.5 rounded-xl glass-card hover:bg-white/10 text-slate-300 font-semibold text-xs border border-white/[0.1] flex items-center justify-center gap-1.5 transition-all disabled:opacity-50 font-mono"
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${isCheckingBackend ? "animate-spin" : ""}`} />
-                Test
+                <span>Test</span>
               </button>
               <button
                 type="submit"
-                className="px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-white font-bold text-xs shadow-lg shadow-cyan-500/20 transition-all"
+                className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-600 hover:from-cyan-300 hover:to-blue-500 text-slate-950 font-bold text-xs shadow-lg shadow-cyan-500/20 transition-all"
               >
                 Apply URL
               </button>
             </div>
             {backendSaveMsg && (
-              <p className="text-xs text-emerald-400 mt-2 flex items-center gap-1.5">
+              <p className="text-xs text-emerald-400 mt-2 flex items-center gap-1.5 font-mono">
                 <Check className="w-3.5 h-3.5" />
                 {backendSaveMsg}
               </p>
@@ -163,19 +163,19 @@ export default function SettingsPage() {
           </div>
 
           {/* Quick Preset Buttons */}
-          <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
-            <span className="text-gray-500 text-[11px]">Quick Presets:</span>
+          <div className="flex flex-wrap items-center gap-2 pt-1 text-xs font-mono">
+            <span className="text-slate-500 text-[11px]">Quick Presets:</span>
             <button
               type="button"
               onClick={() => handleSetPreset(LOCAL_DEV_DEFAULT_BACKEND)}
-              className="px-2.5 py-1 rounded-lg bg-gray-900 hover:bg-gray-800 text-gray-300 border border-gray-800 text-[11px] font-mono transition-colors"
+              className="px-2.5 py-1 rounded-lg glass-card hover:border-cyan-500/30 text-slate-300 border border-white/[0.08] text-[11px] transition-colors"
             >
               Localhost (http://localhost:8000)
             </button>
             <button
               type="button"
               onClick={() => handleSetPreset(PRODUCTION_DEFAULT_BACKEND)}
-              className="px-2.5 py-1 rounded-lg bg-gray-900 hover:bg-gray-800 text-gray-300 border border-gray-800 text-[11px] font-mono transition-colors"
+              className="px-2.5 py-1 rounded-lg glass-card hover:border-cyan-500/30 text-slate-300 border border-white/[0.08] text-[11px] transition-colors"
             >
               Cloud Deployed (Render / Default)
             </button>
@@ -188,7 +188,7 @@ export default function SettingsPage() {
                 setBackendUrl(def);
                 probeBackend();
               }}
-              className="px-2.5 py-1 rounded-lg bg-gray-900 hover:bg-gray-800 text-gray-400 border border-gray-800 text-[11px] transition-colors"
+              className="px-2.5 py-1 rounded-lg glass-card hover:bg-white/10 text-slate-400 border border-white/[0.08] text-[11px] transition-colors"
             >
               Reset to Env Default
             </button>
@@ -197,16 +197,16 @@ export default function SettingsPage() {
       </div>
 
       {/* System Status Banner */}
-      <div className="bg-[#111827] border border-gray-800 rounded-2xl p-6 shadow-xl space-y-4">
-        <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
+      <div className="glass-panel border border-white/[0.08] rounded-3xl p-6 sm:p-7 shadow-xl space-y-4">
+        <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider font-mono flex items-center gap-2">
           <Cpu className="w-4 h-4 text-cyan-400" />
-          Runtime Environment & Health
+          <span>Runtime Environment & Health</span>
         </h3>
         
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="p-3.5 rounded-xl bg-gray-900 border border-gray-800 space-y-1">
-            <span className="text-[10px] text-gray-500 block">FastAPI Backend</span>
-            <div className={`flex items-center gap-2 text-xs font-bold ${healthStatus === "operational" ? "text-emerald-400" : healthStatus === "offline" ? "text-rose-400" : "text-amber-400"}`}>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+          <div className="p-4 rounded-2xl glass-card border border-white/[0.06] space-y-1">
+            <span className="text-[10px] text-slate-500 block font-mono">FastAPI Backend</span>
+            <div className={`flex items-center gap-2 text-xs font-bold font-mono ${healthStatus === "operational" ? "text-emerald-400" : healthStatus === "offline" ? "text-rose-400" : "text-amber-400"}`}>
               {healthStatus === "operational" ? (
                 <>
                   <CheckCircle2 className="w-4 h-4" />
@@ -226,17 +226,17 @@ export default function SettingsPage() {
             </div>
           </div>
 
-          <div className="p-3.5 rounded-xl bg-gray-900 border border-gray-800 space-y-1">
-            <span className="text-[10px] text-gray-500 block">Data Persistence Layer</span>
-            <div className="flex items-center gap-2 text-xs font-bold text-emerald-400">
+          <div className="p-4 rounded-2xl glass-card border border-white/[0.06] space-y-1">
+            <span className="text-[10px] text-slate-500 block font-mono">Data Persistence Layer</span>
+            <div className="flex items-center gap-2 text-xs font-bold text-emerald-400 font-mono">
               <HardDrive className="w-4 h-4" />
               <span>SQLite / PostgreSQL Ready</span>
             </div>
           </div>
 
-          <div className="p-3.5 rounded-xl bg-gray-900 border border-gray-800 space-y-1">
-            <span className="text-[10px] text-gray-500 block">Multi-Agent Engine</span>
-            <div className="flex items-center gap-2 text-xs font-bold text-cyan-400">
+          <div className="p-4 rounded-2xl glass-card border border-white/[0.06] space-y-1">
+            <span className="text-[10px] text-slate-500 block font-mono">Multi-Agent Engine</span>
+            <div className="flex items-center gap-2 text-xs font-bold text-cyan-400 font-mono">
               <Sparkles className="w-4 h-4" />
               <span>16 Agents Active</span>
             </div>
@@ -245,13 +245,13 @@ export default function SettingsPage() {
       </div>
 
       {/* Pluggable LLM Adapter Configuration */}
-      <form onSubmit={handleSaveKeys} className="bg-[#111827] border border-gray-800 rounded-2xl p-6 sm:p-8 space-y-6 shadow-xl">
+      <form onSubmit={handleSaveKeys} className="glass-panel border border-white/[0.08] rounded-3xl p-6 sm:p-8 space-y-6 shadow-xl">
         <div className="space-y-1">
           <h3 className="text-base font-bold text-white flex items-center gap-2">
             <Key className="w-4 h-4 text-cyan-400" />
-            Pluggable LLM Provider Adapter
+            <span>Pluggable LLM Provider Adapter</span>
           </h3>
-          <p className="text-xs text-gray-400 leading-relaxed">
+          <p className="text-xs text-slate-400 leading-relaxed">
             NEXORA includes an intelligent, verified <strong>Benchmark & Heuristic Simulation Engine</strong> loaded with 
             comprehensive market data across 8 sectors. To optionally connect direct frontier LLMs (Gemini / OpenAI), 
             input your API keys below.
@@ -259,7 +259,7 @@ export default function SettingsPage() {
         </div>
 
         {saved && (
-          <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs flex items-center gap-2">
+          <div className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs flex items-center gap-2 font-mono">
             <CheckCircle2 className="w-4 h-4" />
             <span>LLM preferences saved in browser local storage.</span>
           </div>
@@ -267,35 +267,35 @@ export default function SettingsPage() {
 
         <div className="space-y-4 text-xs">
           <div className="space-y-1.5">
-            <label className="font-semibold text-gray-300 block">Google Gemini API Key (Optional)</label>
+            <label className="font-semibold text-slate-300 block font-mono text-[11px]">Google Gemini API Key (Optional)</label>
             <input
               type="password"
               value={geminiKey}
               onChange={(e) => setGeminiKey(e.target.value)}
               placeholder="AIzaSy..."
-              className="w-full px-3.5 py-2.5 bg-gray-900 border border-gray-800 rounded-xl text-xs text-white font-mono placeholder-gray-600 focus:outline-none focus:border-cyan-500"
+              className="w-full px-3.5 py-2.5 bg-[#070A12]/90 border border-white/[0.1] rounded-xl text-xs text-white font-mono placeholder-slate-600 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/50"
             />
           </div>
 
           <div className="space-y-1.5">
-            <label className="font-semibold text-gray-300 block">OpenAI API Key (Optional)</label>
+            <label className="font-semibold text-slate-300 block font-mono text-[11px]">OpenAI API Key (Optional)</label>
             <input
               type="password"
               value={openaiKey}
               onChange={(e) => setOpenaiKey(e.target.value)}
               placeholder="sk-proj-..."
-              className="w-full px-3.5 py-2.5 bg-gray-900 border border-gray-800 rounded-xl text-xs text-white font-mono placeholder-gray-600 focus:outline-none focus:border-cyan-500"
+              className="w-full px-3.5 py-2.5 bg-[#070A12]/90 border border-white/[0.1] rounded-xl text-xs text-white font-mono placeholder-slate-600 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/50"
             />
           </div>
         </div>
 
-        <div className="pt-2 flex items-center justify-between">
-          <span className="text-[11px] text-gray-500">
+        <div className="pt-3 border-t border-white/[0.08] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <span className="text-[11px] text-slate-500 font-mono">
             Keys are never exposed to public APIs and run through server-side adapters.
           </span>
           <button
             type="submit"
-            className="px-6 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-white font-bold text-xs shadow-lg shadow-cyan-500/20 transition-all"
+            className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-600 hover:from-cyan-300 hover:to-blue-500 text-slate-950 font-bold text-xs shadow-lg shadow-cyan-500/20 transition-all self-start sm:self-auto"
           >
             Save Preferences
           </button>
@@ -303,10 +303,10 @@ export default function SettingsPage() {
       </form>
 
       {/* Responsible AI Disclaimer */}
-      <div className="p-6 rounded-2xl bg-gray-900/60 border border-gray-800 space-y-2 text-xs text-gray-400 leading-relaxed">
-        <h4 className="font-bold text-gray-300 flex items-center gap-2">
+      <div className="p-6 rounded-3xl glass-card border border-white/[0.08] space-y-2 text-xs text-slate-400 leading-relaxed">
+        <h4 className="font-bold text-slate-200 flex items-center gap-2">
           <ShieldAlert className="w-4 h-4 text-amber-400" />
-          Responsible AI & Decision-Support Notice
+          <span>Responsible AI & Decision-Support Notice</span>
         </h4>
         <p>
           NEXORA is an executive business decision-support tool. All market sizes, financial break-even projections, 

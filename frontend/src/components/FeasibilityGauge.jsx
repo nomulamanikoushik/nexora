@@ -1,5 +1,5 @@
 import React from "react";
-import { ShieldCheck, HelpCircle, TrendingUp, AlertCircle } from "lucide-react";
+import { ShieldCheck, HelpCircle, TrendingUp, AlertCircle, Sparkles } from "lucide-react";
 
 export default function FeasibilityGauge({ score = 78, scoreBreakdown }) {
   const normalizedScore = Math.min(100, Math.max(0, Math.round(score)));
@@ -7,20 +7,20 @@ export default function FeasibilityGauge({ score = 78, scoreBreakdown }) {
   // Color palette based on score
   let strokeColor = "#10B981"; // Emerald
   let textColor = "text-emerald-400";
-  let bgGradient = "from-emerald-500/20 to-transparent";
+  let bgGradient = "from-emerald-500/15 via-transparent to-transparent";
 
   if (normalizedScore < 60) {
     strokeColor = "#F43F5E"; // Rose
     textColor = "text-rose-400";
-    bgGradient = "from-rose-500/20 to-transparent";
+    bgGradient = "from-rose-500/15 via-transparent to-transparent";
   } else if (normalizedScore < 72) {
     strokeColor = "#F59E0B"; // Amber
     textColor = "text-amber-400";
-    bgGradient = "from-amber-500/20 to-transparent";
+    bgGradient = "from-amber-500/15 via-transparent to-transparent";
   } else if (normalizedScore < 82) {
-    strokeColor = "#06B6D4"; // Cyan
+    strokeColor = "#00F0FF"; // Cyan
     textColor = "text-cyan-400";
-    bgGradient = "from-cyan-500/20 to-transparent";
+    bgGradient = "from-cyan-500/15 via-transparent to-transparent";
   }
 
   const radius = 60;
@@ -39,23 +39,23 @@ export default function FeasibilityGauge({ score = 78, scoreBreakdown }) {
   ];
 
   return (
-    <div className="bg-[#111827] border border-gray-800 rounded-2xl p-6 shadow-xl relative overflow-hidden">
+    <div className="glass-panel border border-white/[0.08] rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
       
       {/* Background glow */}
-      <div className={`absolute -top-12 -right-12 w-48 h-48 bg-gradient-to-br ${bgGradient} rounded-full blur-3xl pointer-events-none`}></div>
+      <div className={`absolute -top-12 -right-12 w-64 h-64 bg-gradient-to-br ${bgGradient} rounded-full blur-3xl pointer-events-none`} />
 
-      <div className="flex flex-col md:flex-row items-center gap-8 justify-between">
+      <div className="flex flex-col md:flex-row items-center gap-8 justify-between relative">
         
         {/* Circular Radial Gauge */}
         <div className="flex flex-col items-center shrink-0">
-          <div className="relative w-40 h-40 flex items-center justify-center">
+          <div className="relative w-44 h-44 flex items-center justify-center">
             <svg className="w-full h-full transform -rotate-90" viewBox="0 0 160 160">
               {/* Background Track */}
               <circle
                 cx="80"
                 cy="80"
                 r={radius}
-                className="text-gray-800/80"
+                className="text-slate-800/80"
                 strokeWidth="12"
                 stroke="currentColor"
                 fill="transparent"
@@ -75,18 +75,18 @@ export default function FeasibilityGauge({ score = 78, scoreBreakdown }) {
               />
             </svg>
             
-            <div className="absolute flex flex-col items-center justify-center">
-              <span className={`text-4xl font-black font-['Plus_Jakarta_Sans'] ${textColor}`}>
+            <div className="absolute flex flex-col items-center justify-center text-center">
+              <span className={`text-4xl font-black font-mono tracking-tight ${textColor}`}>
                 {normalizedScore}
               </span>
-              <span className="text-[11px] uppercase tracking-wider text-gray-400 font-semibold mt-0.5">
+              <span className="text-[10px] uppercase font-mono tracking-widest text-slate-400 font-semibold mt-0.5">
                 Out of 100
               </span>
             </div>
           </div>
 
-          <div className="mt-3 text-center">
-            <div className={`text-xs font-bold px-3 py-1 rounded-full bg-gray-900 border border-gray-700/60 inline-flex items-center gap-1.5 ${textColor}`}>
+          <div className="mt-2 text-center">
+            <div className={`text-xs font-bold px-3 py-1 rounded-full glass-pill border border-white/[0.08] inline-flex items-center gap-1.5 font-mono ${textColor}`}>
               <ShieldCheck className="w-3.5 h-3.5" />
               {scoreBreakdown?.rating_label || "High Feasibility"}
             </div>
@@ -95,33 +95,31 @@ export default function FeasibilityGauge({ score = 78, scoreBreakdown }) {
 
         {/* 8 Dimension Mini Bars */}
         <div className="flex-1 w-full space-y-2.5">
-          <div className="flex items-center justify-between text-xs text-gray-400 pb-1 border-b border-gray-800">
-            <span className="font-semibold uppercase tracking-wider text-[11px]">8 Feasibility Pillars</span>
+          <div className="flex items-center justify-between text-xs text-slate-400 pb-2 border-b border-white/[0.08] font-mono">
+            <span className="font-semibold uppercase tracking-wider text-[11px] flex items-center gap-1.5 text-cyan-400">
+              <Sparkles className="w-3.5 h-3.5" />
+              8 Feasibility Pillars
+            </span>
             <span>Composite Weighting</span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2.5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
             {dimensions.map((dim, idx) => (
-              <div key={idx} className="space-y-1">
+              <div key={idx} className="glass-card p-2.5 rounded-xl border border-white/[0.06] space-y-1 hover:border-cyan-500/30 transition-colors">
                 <div className="flex justify-between text-xs">
-                  <span className="text-gray-300 font-medium">{dim.label}</span>
-                  <span className="text-gray-400 font-mono font-semibold">{dim.val}%</span>
+                  <span className="text-slate-300 font-medium truncate">{dim.label}</span>
+                  <span className="text-white font-mono font-bold">{dim.val}%</span>
                 </div>
-                <div className="h-1.5 w-full bg-gray-800 rounded-full overflow-hidden">
+                <div className="h-1.5 w-full bg-[#070A12] rounded-full overflow-hidden border border-white/[0.06]">
                   <div 
-                    className="h-full bg-gradient-to-r from-cyan-500 to-indigo-500 rounded-full transition-all duration-700"
+                    className="h-full bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full transition-all duration-700" 
                     style={{ width: `${dim.val}%` }}
-                  ></div>
+                  />
                 </div>
+                <span className="text-[10px] text-slate-500 block truncate font-mono">{dim.desc}</span>
               </div>
             ))}
           </div>
-
-          {scoreBreakdown?.explanation && (
-            <p className="text-xs text-gray-400 leading-relaxed pt-2 border-t border-gray-800/80">
-              {scoreBreakdown.explanation}
-            </p>
-          )}
         </div>
 
       </div>

@@ -6,158 +6,207 @@ import {
   Layers, 
   TrendingUp, 
   ShieldCheck, 
-  CheckCircle, 
+  CheckCircle2, 
   BarChart3, 
   Sliders, 
   MapPin, 
   Coins, 
   Zap,
   Target,
-  FileText
+  FileText,
+  Activity,
+  Bot,
+  Compass,
+  ArrowUpRight
 } from "lucide-react";
 import { PRESETS } from "../utils/presets";
 
 export default function LandingPage({ setActivePage, onSelectPreset }) {
-  const featuredPreset = PRESETS[0]; // Hyderabad Food & Beverage
+  const featuredPreset = PRESETS[0]; // Hyderabad Healthy Snacks
 
   return (
-    <div className="space-y-24 pb-20">
+    <div className="space-y-28 pb-24">
       
       {/* Hero Section */}
-      <section className="relative pt-12 pb-8 overflow-hidden text-center max-w-5xl mx-auto px-4">
-        {/* Ambient Glows */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-r from-cyan-500/15 via-blue-600/15 to-indigo-600/15 blur-3xl pointer-events-none rounded-full"></div>
+      <section className="relative pt-12 sm:pt-20 pb-8 overflow-hidden text-center max-w-6xl mx-auto px-4">
+        {/* Luminous Ambient Background Glows */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[420px] bg-gradient-to-tr from-cyan-500/15 via-blue-600/10 to-indigo-600/15 blur-[120px] pointer-events-none rounded-full" />
+        <div className="absolute top-1/3 left-1/4 w-[300px] h-[300px] bg-cyan-400/10 blur-[90px] pointer-events-none rounded-full" />
 
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-900 border border-gray-800 text-xs text-gray-300 mb-6 shadow-sm">
-          <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
-          <span>NEXORA 2.0 — Multi-Agent Agentic AI Business Launch Platform</span>
+        {/* Telemetry Pill Badge */}
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-pill text-xs text-slate-300 mb-8 shadow-sm border border-cyan-500/20 glow-cyan-sm">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400"></span>
+          </span>
+          <span className="font-mono uppercase tracking-wider text-[11px] text-cyan-300 font-semibold">NEXORA 2.0</span>
+          <span className="text-slate-600">•</span>
+          <span className="text-slate-300">16-Agent Autonomous AI Orchestration</span>
         </div>
 
-        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.15]">
+        {/* Headline */}
+        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.1] max-w-5xl mx-auto">
           Turn Your Business Idea <br className="hidden sm:inline" />
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400">
-            Into a Launch Plan.
+          <span className="text-gradient-cyan">
+            Into an Execution-Grade Launch Plan.
           </span>
         </h1>
 
-        <p className="mt-6 text-base sm:text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed">
-          NEXORA uses a team of AI agents to research, plan, validate, market, and build an actionable roadmap for your business.
+        <p className="mt-6 text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed font-normal">
+          Deploy an autonomous team of 16 AI agents to research market TAM, calculate unit economics, acquire early customers, simulate cash runway, and synthesize an investor-ready blueprint.
         </p>
 
         {/* Action CTAs */}
-        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
           <button
             onClick={() => setActivePage("onboarding")}
-            className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-bold text-sm shadow-xl shadow-cyan-500/25 flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98]"
+            className="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-400 via-cyan-500 to-blue-600 hover:from-cyan-300 hover:to-blue-500 text-slate-950 font-extrabold text-sm shadow-xl shadow-cyan-500/25 flex items-center justify-center gap-2.5 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
           >
+            <Sparkles className="w-4 h-4 text-slate-950 fill-current" />
             <span>Build My Business Plan</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
-
-          <button
-            onClick={() => {
-              const el = document.getElementById("how-it-works");
-              if (el) el.scrollIntoView({ behavior: "smooth" });
-            }}
-            className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-gray-900 hover:bg-gray-800 text-gray-200 border border-gray-700/80 font-semibold text-sm flex items-center justify-center gap-2 transition-colors shadow-sm"
-          >
-            <span>See How NEXORA Works</span>
+            <ArrowRight className="w-4 h-4 text-slate-950" />
           </button>
 
           <button
             onClick={() => onSelectPreset(featuredPreset)}
-            className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-emerald-950/40 hover:bg-emerald-900/50 text-emerald-300 border border-emerald-500/40 font-semibold text-sm flex items-center justify-center gap-2.5 transition-colors shadow-sm"
+            className="w-full sm:w-auto px-6 py-4 rounded-xl glass-panel-interactive text-emerald-300 border-emerald-500/30 font-semibold text-sm flex items-center justify-center gap-2.5 shadow-lg shadow-emerald-500/5 hover:border-emerald-400/50"
           >
-            <Zap className="w-4 h-4 text-emerald-400" />
-            <span>Launch Hyderabad Healthy Snacks Demo (₹3L)</span>
+            <Zap className="w-4 h-4 text-emerald-400 fill-current" />
+            <span>Launch Demo: Hyderabad Snacks (₹3L)</span>
+          </button>
+
+          <button
+            onClick={() => {
+              const el = document.getElementById("critic-loop");
+              if (el) el.scrollIntoView({ behavior: "smooth" });
+            }}
+            className="w-full sm:w-auto px-6 py-4 rounded-xl glass-panel text-slate-300 hover:text-white border-white/10 hover:border-white/20 font-medium text-sm flex items-center justify-center gap-2 transition-colors"
+          >
+            <span>Explore Architecture</span>
           </button>
         </div>
 
-        {/* Trust Badges */}
-        <div className="mt-12 pt-8 border-t border-gray-800/60 grid grid-cols-2 sm:grid-cols-4 gap-4 text-left">
-          <div className="p-3 bg-gray-900/40 rounded-xl border border-gray-800/80">
-            <div className="text-xl font-extrabold text-white font-mono">13</div>
-            <div className="text-xs text-gray-400 mt-0.5">Specialized Agents</div>
+        {/* Trust & Performance Telemetry Metrics */}
+        <div className="mt-16 pt-10 border-t border-white/[0.08] grid grid-cols-2 sm:grid-cols-4 gap-4 text-left">
+          <div className="p-4 rounded-2xl glass-card border border-white/[0.06] hover:border-cyan-500/30 transition-all duration-300">
+            <div className="flex items-center justify-between">
+              <span className="text-2xl sm:text-3xl font-black text-white font-mono">16</span>
+              <Bot className="w-4 h-4 text-cyan-400" />
+            </div>
+            <div className="text-xs font-semibold text-slate-200 mt-1">Autonomous Agents</div>
+            <div className="text-[11px] text-slate-400 mt-0.5">Specialized parallel nodes</div>
           </div>
-          <div className="p-3 bg-gray-900/40 rounded-xl border border-gray-800/80">
-            <div className="text-xl font-extrabold text-cyan-400 font-mono">100%</div>
-            <div className="text-xs text-gray-400 mt-0.5">Explainable Decisions</div>
+
+          <div className="p-4 rounded-2xl glass-card border border-white/[0.06] hover:border-cyan-500/30 transition-all duration-300">
+            <div className="flex items-center justify-between">
+              <span className="text-2xl sm:text-3xl font-black text-cyan-400 font-mono">100%</span>
+              <ShieldCheck className="w-4 h-4 text-cyan-400" />
+            </div>
+            <div className="text-xs font-semibold text-slate-200 mt-1">Explainable Reasoning</div>
+            <div className="text-[11px] text-slate-400 mt-0.5">Auditable data citations</div>
           </div>
-          <div className="p-3 bg-gray-900/40 rounded-xl border border-gray-800/80">
-            <div className="text-xl font-extrabold text-indigo-400 font-mono">Dynamic</div>
-            <div className="text-xs text-gray-400 mt-0.5">Critic Feedback Loop</div>
+
+          <div className="p-4 rounded-2xl glass-card border border-white/[0.06] hover:border-indigo-500/30 transition-all duration-300">
+            <div className="flex items-center justify-between">
+              <span className="text-2xl sm:text-3xl font-black text-indigo-400 font-mono">Loop</span>
+              <Activity className="w-4 h-4 text-indigo-400" />
+            </div>
+            <div className="text-xs font-semibold text-slate-200 mt-1">Critic Feedback</div>
+            <div className="text-[11px] text-slate-400 mt-0.5">Zero broken assumptions</div>
           </div>
-          <div className="p-3 bg-gray-900/40 rounded-xl border border-gray-800/80">
-            <div className="text-xl font-extrabold text-emerald-400 font-mono">Interactive</div>
-            <div className="text-xs text-gray-400 mt-0.5">What-If Simulator</div>
+
+          <div className="p-4 rounded-2xl glass-card border border-white/[0.06] hover:border-emerald-500/30 transition-all duration-300">
+            <div className="flex items-center justify-between">
+              <span className="text-2xl sm:text-3xl font-black text-emerald-400 font-mono">Instant</span>
+              <Sliders className="w-4 h-4 text-emerald-400" />
+            </div>
+            <div className="text-xs font-semibold text-slate-200 mt-1">What-If Simulator</div>
+            <div className="text-[11px] text-slate-400 mt-0.5">Real-time sensitivity runs</div>
           </div>
         </div>
       </section>
 
-      {/* The Core Transformation */}
+      {/* The Core Transformation Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full glass-pill text-[11px] font-mono font-semibold text-cyan-400 mb-3 uppercase tracking-wider">
+            From Raw Ideas to Execution
+          </div>
+          <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
             How NEXORA Transforms Your Starting Assumptions
           </h2>
-          <p className="mt-2 text-sm text-gray-400">
-            Turn fragmented ideas and raw capital into an executive-grade launch blueprint in minutes.
+          <p className="mt-3 text-sm text-slate-400">
+            Feed fragmented ideas and starting capital into the pipeline — receive an executive-grade launch blueprint with mathematical precision.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
           
-          {/* Inputs */}
-          <div className="lg:col-span-5 bg-[#111827] border border-gray-800 rounded-2xl p-6 space-y-4">
-            <div className="text-xs font-bold text-cyan-400 uppercase tracking-wider flex items-center gap-1.5">
-              <Coins className="w-4 h-4" />
+          {/* Inputs Column */}
+          <div className="lg:col-span-5 glass-panel rounded-3xl p-6 sm:p-7 space-y-4 border border-white/[0.08] shadow-xl">
+            <div className="text-xs font-bold text-cyan-400 uppercase tracking-wider flex items-center gap-2 font-mono">
+              <Coins className="w-4 h-4 text-cyan-400" />
               Your Starting Inputs
             </div>
-            <div className="space-y-2.5">
+            <div className="space-y-3">
               {[
-                { label: "Available Starting Capital", eg: "e.g. ?10,00,000 liquid capital" },
-                { label: "Chosen Sector & Idea", eg: "e.g. Food & Beverage / Cloud Kitchen" },
-                { label: "Target City & Location", eg: "e.g. Hyderabad (Madhapur / Hitec)" },
-                { label: "Founder Goals & Risk Profile", eg: "e.g. Moderate risk, 3-year horizon" }
-              ].map((item, i) => (
-                <div key={i} className="p-3 rounded-lg bg-gray-900/80 border border-gray-800">
-                  <div className="text-xs font-semibold text-gray-200">{item.label}</div>
-                  <div className="text-[11px] text-gray-400">{item.eg}</div>
-                </div>
-              ))}
+                { label: "Available Starting Capital", eg: "e.g. ₹3,00,000 to ₹50,00,000 liquid capital", icon: Coins, color: "text-emerald-400" },
+                { label: "Chosen Sector & Concept", eg: "e.g. Food & Beverage / Cloud Kitchen / Healthy Snacks", icon: Target, color: "text-cyan-400" },
+                { label: "Target City & Locality", eg: "e.g. Kondapur / Hitec City, Hyderabad", icon: MapPin, color: "text-indigo-400" },
+                { label: "Founder Goals & Risk Profile", eg: "e.g. Moderate risk, 3-year horizon, home-based launch", icon: Compass, color: "text-violet-400" }
+              ].map((item, i) => {
+                const Icon = item.icon;
+                return (
+                  <div key={i} className="p-3.5 rounded-xl bg-slate-900/60 border border-white/[0.06] hover:border-cyan-500/30 transition-colors">
+                    <div className="flex items-center gap-2 mb-1">
+                      <Icon className={`w-3.5 h-3.5 ${item.color}`} />
+                      <div className="text-xs font-semibold text-slate-200">{item.label}</div>
+                    </div>
+                    <div className="text-[11px] text-slate-400 pl-5.5 font-mono">{item.eg}</div>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
-          {/* Center Connector */}
-          <div className="lg:col-span-2 flex flex-col items-center justify-center gap-2">
-            <div className="w-10 h-10 rounded-full bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400">
-              <Cpu className="w-5 h-5 animate-spin" />
+          {/* Center Orchestrator Nexus */}
+          <div className="lg:col-span-2 flex flex-col items-center justify-center py-4 gap-3">
+            <div className="relative flex items-center justify-center">
+              <div className="w-16 h-16 rounded-full bg-cyan-500/10 border border-cyan-500/40 flex items-center justify-center text-cyan-400 glow-cyan-lg">
+                <Cpu className="w-7 h-7 animate-spin" style={{ animationDuration: "10s" }} />
+              </div>
+              <div className="absolute -inset-2 rounded-full border border-cyan-500/20 animate-ping opacity-30 pointer-events-none" />
             </div>
-            <span className="text-[10px] uppercase font-bold text-cyan-400 tracking-wider">
-              16 Agents Collaborate
-            </span>
+            <div className="text-center">
+              <span className="text-[10px] uppercase font-mono font-bold text-cyan-400 tracking-wider block">
+                16 Autonomous Agents
+              </span>
+              <span className="text-[10px] text-slate-500 block">Parallel Coordination</span>
+            </div>
           </div>
 
-          {/* Outputs */}
-          <div className="lg:col-span-5 bg-[#111827] border border-gray-800 rounded-2xl p-6 space-y-4">
-            <div className="text-xs font-bold text-indigo-400 uppercase tracking-wider flex items-center gap-1.5">
-              <FileText className="w-4 h-4" />
+          {/* Outputs Column */}
+          <div className="lg:col-span-5 glass-panel rounded-3xl p-6 sm:p-7 space-y-4 border border-white/[0.08] shadow-xl">
+            <div className="text-xs font-bold text-indigo-400 uppercase tracking-wider flex items-center gap-2 font-mono">
+              <FileText className="w-4 h-4 text-indigo-400" />
               The Validated Business Plan
             </div>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-2.5">
               {[
-                "Market TAM / SAM / SOM",
-                "Customer Persona Profiles",
-                "Competitor Moat Analysis",
-                "Location Suitability Index",
+                "TAM / SAM / SOM Metrics",
+                "Customer Personas",
+                "Competitor Moat Grid",
+                "Zone Suitability Index",
                 "Capital Allocation Donut",
-                "Break-even Projections",
-                "Statutory Compliance List",
-                "9-Phase Launch Roadmap"
+                "Month-by-Month Burn",
+                "Statutory Compliance",
+                "First 10 Customers Playbook",
+                "Growth Viral Loops",
+                "Milestone Launch Roadmap"
               ].map((item, i) => (
-                <div key={i} className="p-2 rounded bg-gray-900/80 border border-gray-800 text-xs text-gray-300 flex items-center gap-1.5">
-                  <CheckCircle className="w-3 h-3 text-emerald-400 shrink-0" />
-                  <span className="truncate">{item}</span>
+                <div key={i} className="p-2.5 rounded-xl bg-slate-900/60 border border-white/[0.06] text-xs text-slate-200 flex items-center gap-2 hover:border-indigo-500/30 transition-colors">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                  <span className="text-[11px] font-medium truncate">{item}</span>
                 </div>
               ))}
             </div>
@@ -167,104 +216,141 @@ export default function LandingPage({ setActivePage, onSelectPreset }) {
       </section>
 
       {/* Multi-Agent Collaboration & Critic Loop Showcase */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-b from-[#111827] to-[#0D121F] border border-gray-800 rounded-3xl p-8 lg:p-12 space-y-8">
-          <div className="max-w-2xl">
-            <span className="text-xs font-bold text-cyan-400 uppercase tracking-wider">
-              Genuine Agentic AI Architecture
-            </span>
-            <h3 className="text-2xl sm:text-3xl font-extrabold text-white mt-2">
+      <section id="critic-loop" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative rounded-3xl glass-panel border border-white/[0.08] p-8 lg:p-12 overflow-hidden shadow-2xl">
+          {/* Ambient Glow */}
+          <div className="absolute top-0 right-0 w-[400px] h-[300px] bg-indigo-600/10 blur-[100px] pointer-events-none rounded-full" />
+          <div className="absolute bottom-0 left-0 w-[400px] h-[300px] bg-cyan-500/10 blur-[100px] pointer-events-none rounded-full" />
+
+          <div className="max-w-3xl space-y-3 relative">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-pill text-[11px] font-mono font-bold text-cyan-400 uppercase tracking-wider">
+              Genuine Multi-Agent Architecture
+            </div>
+            <h3 className="text-2xl sm:text-4xl font-extrabold text-white">
               The Risk Critic & Revision Feedback Loop
             </h3>
-            <p className="text-xs sm:text-sm text-gray-400 mt-2 leading-relaxed">
-              When the Risk & Critic agent detects budget imbalances or tight cash runways, 
-              it doesn't output broken assumptions?it issues formal revision requests to upstream agents until stability is achieved.
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
+              Most AI platforms generate unchecked hallucinated numbers. NEXORA incorporates a dedicated <strong>Risk Critic Node</strong> that stress-tests capital allocation, unit economics, and burn rate. If cash runway falls below safe thresholds, it commands upstream agents to iterate until mathematical balance is achieved.
             </p>
           </div>
 
           {/* Simulated Dialogue Box */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="p-4 rounded-xl bg-gray-900/90 border border-gray-800 space-y-2">
-              <div className="text-xs font-bold text-blue-400 flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-blue-400"></span>
-                Capital Planning Agent
+          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 relative">
+            
+            {/* Step 1: Capital Planning */}
+            <div className="p-4 rounded-2xl glass-card border border-blue-500/20 space-y-2.5">
+              <div className="flex items-center justify-between text-xs">
+                <span className="font-bold text-blue-400 flex items-center gap-1.5 font-mono text-[11px]">
+                  <span className="w-2 h-2 rounded-full bg-blue-400"></span>
+                  Capital Agent
+                </span>
+                <span className="text-[10px] font-mono text-slate-500">Draft v1</span>
               </div>
-              <p className="text-xs text-gray-300 leading-relaxed">
-                "Allocating 43% of ?10 Lakh capital to setup and equipment, leaving 12% in working capital."
+              <p className="text-xs text-slate-300 leading-relaxed">
+                "Allocating 48% of ₹10 Lakh to commercial kitchen setup, leaving only 12% in working capital reserve."
               </p>
             </div>
 
-            <div className="p-4 rounded-xl bg-gray-900/90 border border-gray-800 space-y-2">
-              <div className="text-xs font-bold text-cyan-400 flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-cyan-400"></span>
-                Cost & Revenue Agent
+            {/* Step 2: Cost & Revenue */}
+            <div className="p-4 rounded-2xl glass-card border border-cyan-500/20 space-y-2.5">
+              <div className="flex items-center justify-between text-xs">
+                <span className="font-bold text-cyan-400 flex items-center gap-1.5 font-mono text-[11px]">
+                  <span className="w-2 h-2 rounded-full bg-cyan-400"></span>
+                  Revenue Agent
+                </span>
+                <span className="text-[10px] font-mono text-slate-500">Draft v1</span>
               </div>
-              <p className="text-xs text-gray-300 leading-relaxed">
-                "Monthly fixed operating burn modeled at ?1.25 Lakh. Break-even anticipated by Month 7."
+              <p className="text-xs text-slate-300 leading-relaxed">
+                "Monthly fixed operating burn modeled at ₹1.45 Lakh. Break-even anticipated by Month 8."
               </p>
             </div>
 
-            <div className="p-4 rounded-xl bg-amber-950/20 border border-amber-500/40 space-y-2">
-              <div className="text-xs font-bold text-amber-400 flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
-                Risk Critic Agent (Challenge)
+            {/* Step 3: Critic Challenge */}
+            <div className="p-4 rounded-2xl bg-amber-950/20 border border-amber-500/40 space-y-2.5 shadow-lg shadow-amber-500/5">
+              <div className="flex items-center justify-between text-xs">
+                <span className="font-bold text-amber-300 flex items-center gap-1.5 font-mono text-[11px]">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-400"></span>
+                  </span>
+                  Risk Critic (Intervention)
+                </span>
+                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300">Rejected</span>
               </div>
-              <p className="text-xs text-amber-200 leading-relaxed">
-                "REVISION REQUIRED: Remaining ?1.2L cash reserve provides only 1.4 months runway. Rebalance capex!"
+              <p className="text-xs text-amber-200/90 leading-relaxed font-mono">
+                "REVISION REQUIRED: ₹1.2L cash reserve provides only 0.8 months runway. Rebalance capex immediately!"
               </p>
             </div>
 
-            <div className="p-4 rounded-xl bg-emerald-950/20 border border-emerald-500/40 space-y-2">
-              <div className="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
-                Strategy Agent (Resolution)
+            {/* Step 4: Strategy Resolution */}
+            <div className="p-4 rounded-2xl bg-emerald-950/20 border border-emerald-500/40 space-y-2.5 shadow-lg shadow-emerald-500/5">
+              <div className="flex items-center justify-between text-xs">
+                <span className="font-bold text-emerald-300 flex items-center gap-1.5 font-mono text-[11px]">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+                  Strategy Agent
+                </span>
+                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300">Approved</span>
               </div>
-              <p className="text-xs text-emerald-200 leading-relaxed">
-                "Capex rebalanced by 9%. Working capital reserve fortified to 25% (?2.5L). Plan approved!"
+              <p className="text-xs text-emerald-200/90 leading-relaxed">
+                "Capex rebalanced by 14%. Liquid runway fortified to 3.2 months (₹2.8L). Plan cleared for execution."
               </p>
             </div>
+
           </div>
         </div>
       </section>
 
       {/* Preset Demo Cards */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-        <div>
-          <h3 className="text-xl sm:text-2xl font-extrabold text-white">
-            Explore Ready-to-Run Demo Scenarios
-          </h3>
-          <p className="text-xs sm:text-sm text-gray-400 mt-1">
-            Test the complete 13-agent pipeline with pre-populated industry parameters.
-          </p>
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+          <div>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full glass-pill text-[11px] font-mono font-bold text-cyan-400 uppercase tracking-wider mb-2">
+              Ready-to-Run Benchmarks
+            </div>
+            <h3 className="text-xl sm:text-3xl font-extrabold text-white">
+              Explore Pre-Populated Scenarios
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-400 mt-1">
+              Test the complete 16-agent pipeline with calibrated regional assumptions.
+            </p>
+          </div>
+
+          <button
+            onClick={() => setActivePage("onboarding")}
+            className="text-xs font-semibold text-cyan-400 hover:text-cyan-300 flex items-center gap-1 transition-colors self-start sm:self-auto"
+          >
+            <span>Or configure custom parameters</span>
+            <ArrowUpRight className="w-4 h-4" />
+          </button>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {PRESETS.map((p) => (
             <div 
               key={p.id}
-              className="p-5 rounded-2xl bg-[#111827] border border-gray-800 hover:border-gray-700 transition-all flex flex-col justify-between space-y-4 group"
+              className="p-5 rounded-2xl glass-panel-interactive border border-white/[0.08] flex flex-col justify-between space-y-4 group"
             >
-              <div className="space-y-2">
+              <div className="space-y-2.5">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                  <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 font-mono">
                     {p.badge}
                   </span>
-                  <span className="text-xs font-mono font-bold text-gray-200">{p.capitalDisplay}</span>
+                  <span className="text-xs font-mono font-bold text-slate-200">{p.capitalDisplay}</span>
                 </div>
                 <h4 className="text-sm font-bold text-white group-hover:text-cyan-400 transition-colors">
                   {p.business_name}
                 </h4>
-                <p className="text-xs text-gray-400 line-clamp-2">
+                <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
                   {p.business_type} in {p.location}
                 </p>
               </div>
 
               <button
                 onClick={() => onSelectPreset(p)}
-                className="w-full py-2 rounded-xl bg-gray-900 hover:bg-cyan-500/15 text-gray-200 hover:text-cyan-300 border border-gray-800 hover:border-cyan-500/30 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all"
+                className="w-full py-2.5 rounded-xl bg-slate-900/80 hover:bg-cyan-500 hover:text-slate-950 text-slate-300 border border-white/[0.08] hover:border-cyan-400 text-xs font-bold flex items-center justify-center gap-1.5 transition-all duration-200"
               >
                 <span>Run Demo Plan</span>
-                <ArrowRight className="w-3 h-3" />
+                <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
           ))}
